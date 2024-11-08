@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Nav from "../components/Navbar";
+import Nav from "./Navbar";
 import { CircleX } from "lucide-react";
 import { Link } from "react-router-dom";
 const Contact = () => {

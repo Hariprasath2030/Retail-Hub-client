@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import loginImage from '../assets/login.jpg';
 import useLogin from '../hooks/useLogin'; // Correct hook import
 import '../Auth/form.css';
+import Navbar from '../components/MNavbar';
 
 const Login = () => {
   const { loading, error, LoginUser } = useLogin(); // Call hook as a function
@@ -12,6 +13,9 @@ const Login = () => {
   }
 
   return (
+    <>
+    {/* Navbar Component */}
+    <Navbar />
     <Card className='form-container'>
       <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
         <div style={{ flex: 1 }}>
@@ -33,7 +37,7 @@ const Login = () => {
                 { required: true, message: 'Please input your Email!' },
                 { type: 'email', message: 'The input is not a valid Email!' },
               ]}
-            >
+              >
               <Input size="large" placeholder="Enter your Email" />
             </Form.Item>
             
@@ -41,17 +45,17 @@ const Login = () => {
               label="Password"
               name="password"
               rules={[{ required: true, message: 'Please input your password!' }]}
-            >
+              >
               <Input.Password size="large" placeholder="Enter your Password" />
             </Form.Item>
 
             {error && (
               <Alert
-                description={error}
-                type="error"
-                showIcon
-                closable
-                className='alert'
+              description={error}
+              type="error"
+              showIcon
+              closable
+              className='alert'
               />
             )}
 
@@ -62,13 +66,13 @@ const Login = () => {
                 size="large"
                 className='btn'
                 disabled={loading}
-              >
+                >
                 {loading ? <Spin /> : 'Sign In'}
               </Button>
             </Form.Item>
             
             <Form.Item>
-              <Link to="/">
+              <Link to="/register">
                 <Button size="large" className='btn'>
                   Create an Account
                 </Button>
@@ -78,6 +82,7 @@ const Login = () => {
         </div>
       </div>
     </Card>
+                </>
   );
 }
 
