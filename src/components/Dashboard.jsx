@@ -7,6 +7,7 @@ import { Button } from 'antd';
 import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png'; // Import your logo image
 
+
 const ProductDashboard = () => {
   const [products, setProducts] = useState([]);
   const [userId, setUserId] = useState('');
@@ -146,9 +147,7 @@ const ProductDashboard = () => {
           <button type="submit">{editingProductId ? 'Update Product' : 'Add Product'}</button>
         </form>
 
-        {loading ? (
-          <p>Loading products...</p>
-        ) : (
+        {loading && <CircularProgressbar value={0} />}
           <>
             <h2>Circular Display - Product</h2>
             <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', marginBottom: '20px' }}>
@@ -177,7 +176,7 @@ const ProductDashboard = () => {
                     <strong>{product.productName}</strong>
                     <div style={{ marginTop: '10px' }}>
                     <div className="button-group">
-                    <button onClick={() => editProduct(product)}>Edit</button>
+                      <button onClick={() => editProduct(product)}>Edit</button>
                       <button className="delete-button" onClick={() => deleteProduct(product._id)}>Delete</button>
                      </div>   
                      </div>
@@ -186,7 +185,6 @@ const ProductDashboard = () => {
               ))}
             </div>
           </>
-        )}
 
         <h2>Product List</h2>
         <table className="product-table">
