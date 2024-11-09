@@ -17,7 +17,7 @@ const UserRegister = () => {
           </div>
           <form className="flex flex-col justify-center w-[80%] h-[80%] rounded-2xl items-center gap-4">
             <h1 className="text-blue-600 font-serif text-2xl font-medium">
-              Register Form
+              User Register Form
             </h1>
             <input
               type="text"

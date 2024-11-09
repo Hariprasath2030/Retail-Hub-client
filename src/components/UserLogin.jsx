@@ -15,7 +15,7 @@ const UserLogin = () => {
           </div>
           <form className="flex flex-col justify-center w-[80%] h-[80%] rounded-2xl items-center gap-4">
             <h1 className="text-blue-600 font-serif text-2xl font-medium">
-              Login Form
+              User Login Form
             </h1>
             <input
               type="email"
