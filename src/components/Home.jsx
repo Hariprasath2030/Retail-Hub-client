@@ -10,7 +10,7 @@ const Navbar = () => {
       <h2>SMART RETAIL HUB</h2>
       </div>
       <div className="navbar-links">
-        <Link to="ULogin" className="navbar-link">
+        <Link to="/user_register" className="navbar-link">
           User Login
         </Link>
         <Link to="/register" className="navbar-link">
@@ -28,7 +28,7 @@ const Home = () => {
       <Navbar />
 
       {/* Main Content */}
-      <div className="home-container">
+      <div className="home-container h-[90vh] w-full flex flex-col justify-center items-center">
         <div className="home-content">
           <div className="home-title">
             "Revolutionize Your Retail Business with Smart Retail Hub"
@@ -38,7 +38,7 @@ const Home = () => {
           </div>
         </div>
         <div>
-          <Link to={"/"}>
+          <Link to={"/user_login"}>
             <button className="explore-button">
               Explore Features
             </button>
