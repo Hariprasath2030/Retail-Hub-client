@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Nav from "../components/Navbar";
+import Nav from "./Navbar";
 import { CircleX } from "lucide-react";
 import { Link } from "react-router-dom";
-const Contact = () => {
+const UserRegister = () => {
   return (
     <>
       <div className="h-[90vh] w-screen flex justify-center absolute items-center z-50">
@@ -52,7 +52,7 @@ const Contact = () => {
             </button>
             <div className="">
               Have already an account ?&nbsp;
-              <Link to={"/login"} className="text-blue-600">
+              <Link to={"/user_login"} className="text-blue-600">
                 Login
               </Link>
             </div>
@@ -63,4 +63,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default UserRegister;

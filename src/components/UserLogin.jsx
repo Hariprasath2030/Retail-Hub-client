@@ -1,9 +1,7 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import Nav from "./Navbar";
 import { CircleX } from "lucide-react";
 import { Link } from "react-router-dom";
-const Contact = () => {
+const UserLogin = () => {
   return (
     <>
       <div className="h-[90vh] w-screen flex justify-center absolute items-center z-50">
@@ -45,4 +43,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default UserLogin;
