@@ -114,7 +114,9 @@ const ProductDashboard = () => {
       <div className="background-image"></div>
       <div style={{ padding: '20px'}}>
         <br></br>
-        <h1>Product Dashboard</h1>
+        <br></br>
+        <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px',  fontWeight: 'bold'}}> Product Dashboard</h1>
+        <br></br>
         <form onSubmit={addProduct} className="product-form">
           <input
             type="text"
@@ -149,8 +151,9 @@ const ProductDashboard = () => {
 
         {loading && <CircularProgressbar value={0} />}
           <>
-            <h2>Circular Display - Product</h2>
-            <div style={{ display: 'flex', gap: '40px', flexWrap: 'wrap', marginBottom: '20px' }}>
+          <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}> Circular Display - Product</h2>
+            <br></br>
+            <div style={{ display: 'flex', gap: '50px', flexWrap: 'wrap', marginBottom: '20px' }}>
               {products.map((product) => (
                 <div key={product._id} style={{
                   width: '150px',
@@ -185,8 +188,7 @@ const ProductDashboard = () => {
               ))}
             </div>
           </>
-
-        <h2>Product List</h2>
+          <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}>Product List</h2>
         <table className="product-table">
           <thead>
             <tr>

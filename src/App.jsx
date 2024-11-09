@@ -8,6 +8,7 @@ import { useAuth } from './contexts/AuthContext';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import UserRegister from './components/UserRegister';
 import UserLogin from './components/UserLogin';
+
 const App = () => { 
     
     const { isAuthenticated } = useAuth();
