@@ -1,5 +1,7 @@
 /* Navbar styling */
-
+body{
+  font-family: 'Times New Roman', Times, serif;
+}
   .navbar-logo {
     display: flex;
     align-items: center;
@@ -32,7 +34,6 @@
   }
   
 body, html {
-    color:  #000000;
     margin: -1%;
     width: 100%;
     height: auto;
@@ -89,10 +90,10 @@ body, html {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 2.5rem; /* 10 spacing */
-    background-size: cover;
+    gap: 2rem; /* 10 spacing */
     background-position: center;
-    background-image: url("https://www.vasyerp.com/assets-new/images/Smart%20Retail%20Solution/Analytics%20and%20reports.webp");
+    background-repeat: no-repeat;
+    background-image: url("assets/home_prof.webp");
     z-index: 10;
   }
   
@@ -110,12 +111,12 @@ body, html {
   }
   
   .home-title {
-    font-size: 70px; /* 3xl */
+    font-size: 50px; /* 3xl */
     font-weight: bold;
   }
   
   .home-subtitle {
-    font-size: 30px; /* 2xl */
+    font-size: 25px; /* 2xl */
   }
   
   /* Button styling */

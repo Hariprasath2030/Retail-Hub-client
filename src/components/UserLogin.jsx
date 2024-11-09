@@ -14,22 +14,22 @@ const UserLogin = () => {
             </Link>
           </div>
           <form className="flex flex-col justify-center w-[80%] h-[80%] rounded-2xl items-center gap-4">
-            <h1 className="text-lime-600 font-serif text-2xl font-medium">
+            <h1 className="text-blue-600 font-serif text-2xl font-medium">
               Login Form
             </h1>
             <input
               type="email"
-              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-lime-500 shadow-inner"
+              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
               placeholder="Email"
             />
             <input
               type="password"
-              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-lime-500 shadow-inner"
+              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
               placeholder="password"
             />
             <button
               type="submit"
-              className="h-12 bg-lime-600 rounded-md w-full text-white p-2 font-serif"
+              className="h-12 bg-blue-600 rounded-md w-full text-white p-2 font-serif"
             >
               Login
             </button>

@@ -28,7 +28,7 @@ const Home = () => {
       <Navbar />
 
       {/* Main Content */}
-      <div className="home-container">
+      <div className="home-container h-[90vh] w-full flex flex-col justify-center items-center">
         <div className="home-content">
           <div className="home-title">
             "Revolutionize Your Retail Business with Smart Retail Hub"
@@ -38,7 +38,7 @@ const Home = () => {
           </div>
         </div>
         <div>
-          <Link to={"/"}>
+          <Link to={"/user_login"}>
             <button className="explore-button">
               Explore Features
             </button>
