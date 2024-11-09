@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 const UserRegister = () => {
   return (
     <>
-      <div className="h-[90vh] w-screen flex justify-center absolute items-center z-50">
-        <div className="h-100 w-[30%] pb-10 flex flex-col justify-center items-center bg-white rounded-md shadow-md">
+      <div className="h-auto w-[1000px] flex justify-center">
+        <div className="h-100 w-[40%] pb-10 flex flex-col justify-center items-center bg-white rounded-md shadow-md">
           <div className="w-full flex justify-end align-top">
             <Link to={"/"}>
               <button>
