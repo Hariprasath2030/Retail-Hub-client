@@ -44,6 +44,7 @@ const UserRegister = () => {
               className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
               placeholder="re-enter password"
             />
+            
             <button
               type="submit"
               className="h-12 bg-blue-600 rounded-md w-full text-white p-2 font-serif"
