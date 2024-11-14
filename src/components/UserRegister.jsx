@@ -1,67 +1,117 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import Nav from "./Navbar";
 import { CircleX } from "lucide-react";
-import { Link } from "react-router-dom";
-const UserRegister = () => {
+import { Card, Typography, Form, Input, Button, Spin, Alert } from 'antd';
+import { Link} from 'react-router-dom';
+import Navbar from '../components/MNavbar';
+import registerImage from '../assets/userregister.jpg';
+import useSignup from '../hooks/customerSignup';
+import '../Auth/form.css';
+
+const Register = () => {
+  const { loading, error, registerUser } = useSignup();
+
+  const handleRegister = (values) => {
+    registerUser(values);
+  };
+
   return (
     <>
-      <div className="h-auto w-[1000px] flex justify-center">
-        <div className="h-100 w-[40%] pb-10 flex flex-col justify-center items-center bg-white rounded-md shadow-md">
-          <div className="w-full flex justify-end align-top">
+      {/* Navbar Component */}
+      <Navbar />
+      <Card className="form-container">
+        <div className="w-full flex justify-end align-top">
             <Link to={"/"}>
               <button>
                 <CircleX className="bg-red-600 rounded-full text-white" />
               </button>
             </Link>
           </div>
-          <form className="flex flex-col justify-center w-[80%] h-[80%] rounded-2xl items-center gap-4">
-            <h1 className="text-blue-600 font-serif text-2xl font-medium">
-              User Register Form
-            </h1>
-            <input
-              type="text"
-              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
-              placeholder="Name"
-            />
-            <input
-              type="email"
-              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
-              placeholder="Email"
-            />
-            <input
-              type="phone"
-              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
-              placeholder="phone"
-            />
-            <input
-              type="password"
-              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
-              placeholder="password"
-            />
-            <input
-              type="password"
-              className="font-serif p-2 rounded-md w-full outline-none focus:border-2 focus:border-r-4 focus:border-b-4 border-blue-500 shadow-inner"
-              placeholder="re-enter password"
-            />
-            
-            <button
-              type="submit"
-              className="h-12 bg-blue-600 rounded-md w-full text-white p-2 font-serif"
-            >
-              Register
-            </button>
-            <div className="">
-              Have already an account ?&nbsp;
-              <Link to={"/user_login"} className="text-blue-600">
-                Login
-              </Link>
-            </div>
-          </form>
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <div style={{ flex: 1 }}>
+            <Typography.Title level={3} strong className="title">
+              Create User an account
+            </Typography.Title>
+            <Typography.Text type="secondary" strong className="slogan">
+              Enter your details
+            </Typography.Text>
+            <Form layout="vertical" onFinish={handleRegister} autoComplete="off">
+              <Form.Item
+                label="Full Name"
+                name="name"
+                rules={[{ required: true, message: 'Please input your full name!' }]}
+              >
+                <Input size="large" placeholder="Enter your Full name" />
+              </Form.Item>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[
+                  { required: true, message: 'Please input your Email!' },
+                  { type: 'email', message: 'The input is not a valid Email!' },
+                ]}
+              >
+                <Input size="large" placeholder="Enter your Email" />
+              </Form.Item>
+              <Form.Item
+                label="Phone number"
+                name="phone"
+                rules={[
+                  { required: true, message: 'Please enter your phone number!' },
+                  { type: 'phone', message: 'The input is not a valid number!' },
+                ]}
+              >
+                <Input size="large" placeholder="Enter your Phone number" />
+              </Form.Item>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: 'Please input your password!' }]}
+              >
+                <Input.Password size="large" placeholder="Enter your Password" />
+              </Form.Item>
+              <Form.Item
+                label="Confirm Password"
+                name="passwordConfirm"
+                rules={[{ required: true, message: 'Please confirm your password!' }]}
+              >
+                <Input.Password size="large" placeholder="Re-enter your Password" />
+              </Form.Item>
+
+              {error && (
+                <Alert 
+                  description={error} 
+                  type="error" 
+                  showIcon 
+                  closable
+                  className="alert"
+                />
+              )}
+
+              <Form.Item>
+                <Button 
+                  type={`${loading ? '' : 'primary'}`} 
+                  htmlType="submit" 
+                  size="large" 
+                  className="btn"
+                >
+                  { loading ? <Spin /> : 'Create Account' }
+                </Button>
+              </Form.Item>
+              <Form.Item>
+                <Link to="/user_login">
+                  <Button size="large" className="btn">
+                    Sign in
+                  </Button>
+                </Link>
+              </Form.Item>
+            </Form>
+          </div>
+          <div style={{ flex: 1 }}>
+            <img src={registerImage} alt="Register" className="auth-image" />
+          </div>
         </div>
-      </div>
+      </Card>
     </>
   );
 };
 
-export default UserRegister;
+export default Register;

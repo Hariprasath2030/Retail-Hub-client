@@ -11,7 +11,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-links">
         <Link to="/user_register" className="navbar-link">
-          User Login
+          Customer Login
         </Link>
         <Link to="/register" className="navbar-link">
           Admin Login
@@ -38,7 +38,7 @@ const Home = () => {
           </div>
         </div>
         <div>
-          <Link to={"/user_login"}>
+          <Link to={"/"}>
             <button className="explore-button">
               Explore Features
             </button>

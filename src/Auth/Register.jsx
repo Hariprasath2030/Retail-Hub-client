@@ -1,6 +1,6 @@
-import React from 'react';
+import { CircleX } from "lucide-react";
 import { Card, Typography, Form, Input, Button, Spin, Alert } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/MNavbar';
 import registerImage from '../assets/register.jpg';
 import useSignup from '../hooks/useSignup';
@@ -21,10 +21,17 @@ const Register = () => {
   
 
       <Card className="form-container">
+        <div className="w-full flex justify-end align-top">
+            <Link to={"/"}>
+              <button>
+                <CircleX className="bg-red-600 rounded-full text-white" />
+              </button>
+            </Link>
+          </div>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
           <div style={{ flex: 1 }}>
             <Typography.Title level={3} strong className="title">
-              Create an account
+              Create an Admin account
             </Typography.Title>
             <Typography.Text type="secondary" strong className="slogan">
               Enter your details

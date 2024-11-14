@@ -1,9 +1,42 @@
-import React from "react";
+
 import "react-router-dom";
+import { Button } from 'antd';
 import Cus_Card from "./Cus_Card";
+import { useAuth } from '..//contexts/AuthContext';
+import logo from '/src/assets/retail.png'; 
+
+
+
 const Customer = () => {
+  const { logout } = useAuth();
   return (
     <>
+    {/* Navbar */}
+    <nav className="navbar">
+  <div style={{ display: 'flex', alignItems: 'center' }}>
+    <img src={logo} alt="Logo" />
+    <h2>SMART RETAIL HUB</h2>
+  </div>
+  <Button
+    onClick={logout}
+    style={{
+        padding: '8px 15px',
+        backgroundColor: '#333',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease',
+        fontSize: '16px',
+        textAlign: 'center',
+    }}
+    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#444')}
+    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#333')}
+>
+    Logout
+</Button>
+
+</nav>
       <div className="flex w-full h-full justify-center items-center">
         <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
           <Cus_Card
