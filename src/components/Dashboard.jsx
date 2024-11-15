@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -6,6 +6,7 @@ import './Dashboard.css';
 import { Button } from 'antd';
 import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png'; // Import your logo image
+
 
 
 const ProductDashboard = () => {
@@ -16,6 +17,7 @@ const ProductDashboard = () => {
   const [price, setPrice] = useState(0);
   const [editingProductId, setEditingProductId] = useState(null);
   const [loading, setLoading] = useState(false); // Loading state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
 
   useEffect(() => {
     fetchProducts();
@@ -83,12 +85,22 @@ const ProductDashboard = () => {
 
   const { logout } = useAuth();
 
+  
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <>
-      {/* Navbar */}
-      <nav className="navbar">
-  <div style={{ display: 'flex', alignItems: 'center' }}>
-    <img src={logo} alt="Logo" />
+       {/* Navbar */}
+       <nav className="navbar">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ cursor: 'pointer' }}
+            onClick={toggleSidebar} // Toggle sidebar when logo is clicked
+          />
     <h2>SMART RETAIL HUB</h2>
   </div>
   <Button
@@ -111,7 +123,29 @@ const ProductDashboard = () => {
 </Button>
 
 </nav>
-      <div className="background-image"></div>
+
+      {/* Sidebar */}
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <ul>
+          <br></br>
+          <br></br>
+          <br></br>
+          <li><a href="#dashboard" onClick={toggleSidebar}>Dashboard</a></li>
+          <li><a href="#products" onClick={toggleSidebar}>Products</a></li>
+          <li><a href="#settings" onClick={toggleSidebar}>Settings</a></li>
+          <li><a href="#logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</a></li>
+        </ul>
+      </div>
+
+      {/* Main Content */}
+      <div className={`content ${isSidebarOpen ? 'shift' : ''}`}>
+        {isSidebarOpen && (
+          <div className="toggle-button close" onClick={toggleSidebar}>
+            <span></span>
+            <span></span>
+          </div>
+        )}
+      <div className="background1-image"></div>
       <div style={{ padding: '20px'}}>
         <br></br>
         <br></br>
@@ -209,6 +243,7 @@ const ProductDashboard = () => {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
     </>
   );
