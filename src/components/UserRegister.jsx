@@ -17,6 +17,8 @@ const Register = () => {
     <>
       {/* Navbar Component */}
       <Navbar />
+      
+      <div className="background-image"></div>
       <Card className="form-container">
         <div className="w-full flex justify-end align-top">
             <Link to={"/"}>

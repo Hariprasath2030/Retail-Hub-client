@@ -7,7 +7,11 @@ import { useAuth } from './contexts/AuthContext';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import UserRegister from './components/UserRegister';
 import UserLogin from './components/UserLogin';
-
+import TotalPage from './components/TotalPage';
+import Bar from './components/Bar';
+import BarcodeScanner from './components/BarcodeScanner';
+import PDFDetails from './components/PDFDetails';
+import PDFGenerator from './components/PDFGenerator';
 const App = () => { 
     const { isAuthenticated } = useAuth();
 
@@ -28,6 +32,13 @@ const App = () => {
                 {/* Protected dashboard route */}
                 <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
                 <Route path="/customer" element={isAuthenticated ? <Customer /> : <Navigate to="/user_login" />} />
+
+                {/*bill product*/}
+                <Route path="/totalpage" element={<TotalPage />} />
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/barcodescanner" element={<BarcodeScanner />} />
+                <Route path="/pdfdetails" element={<PDFDetails />} />
+                <Route path="/pdfgenerator" element={<PDFGenerator />} />
             </Routes>
         </Router>
     );

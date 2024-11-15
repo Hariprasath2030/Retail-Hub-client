@@ -5,6 +5,7 @@ import logo from '/src/assets/retail.png'; // Import your logo image
 const Navbar = () => {
   return (
     <nav className="navbar">
+      
       <div style={{ display: 'flex', alignItems: 'center' }}>
       <img src={logo} alt="Logo" />
       <h2>SMART RETAIL HUB</h2>
@@ -28,6 +29,8 @@ const Home = () => {
       <Navbar />
 
       {/* Main Content */}
+      
+      <div className="background-image"></div>
       <div className="home-container h-[90vh] w-full flex flex-col justify-center items-center">
         <div className="home-content">
           <div className="home-title">
