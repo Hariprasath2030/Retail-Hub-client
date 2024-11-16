@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import Cus_Card from "./Cus_Card";
 import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png';
-import '../assets/css/customer.css'
+
 
 
 const Customer = () => {  

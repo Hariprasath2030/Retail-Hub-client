@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png'; // Import your logo image
 import { Link } from "react-router-dom";
-
+import { message } from 'antd';
 
 
 
@@ -19,17 +19,28 @@ const ProductDashboard = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [4]);
+
 
   const fetchProducts = async () => {
     setLoading(true);
     try {
       const res = await axios.get('http://localhost:5000/api/products');
       setProducts(res.data);
+      checkLowStock(res.data); 
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
       setLoading(false);
+    }
+  };
+  const checkLowStock = (products) => {
+    const lowStockProducts = products.filter((product) => product.productQuantity < 50);
+    if (lowStockProducts.length > 0) {
+      // Notify the user about low-stock products
+      lowStockProducts.forEach((product) => {
+        message.warning(`Low stock alert: ${product.productName} is below 50%!`, 4); // Message will disappear after 5 seconds
+      });
     }
   };
 
