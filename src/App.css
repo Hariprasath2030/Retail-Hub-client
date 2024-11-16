@@ -62,7 +62,7 @@ body, html {
   }
   
   .navbar-link:hover {
-    color: #5b5b5b; 
+    color: #000000; 
     background-color: rgb(209, 226, 234);
     border-radius: 6px;
     padding: 0rem 0.5rem;
