@@ -50,6 +50,8 @@ h1 {
  h2{
     font-size: 40px;
     color: rgb(0, 0, 0);
+    font-weight: bold;
+
  }
 .product-form input
 {
@@ -242,7 +244,7 @@ td {
   .toggle-button.close {
     width: 30px;
     height: 30px;
-    position: absolute;
+    position: fixed;
     top: 90px; /* Adjust position for responsiveness */
     left: calc(16% - 50px); /* Near content when sidebar is open */
     cursor: pointer;
@@ -272,7 +274,6 @@ td {
     left: -250px; /* Initially hidden */
     width: 250px;
     height: 100%;
-    background: url('/src/assets/dash.jpg') no-repeat center center fixed;
     background-size: cover;
     transition: left 0.3s ease, transform 0.3s ease; /* Added smooth transition */
     padding: 20px;
@@ -302,14 +303,14 @@ td {
   }
   
   .sidebar ul li a {
-    color: rgb(5, 5, 5);
+    color: rgb(255, 255, 255);
     text-decoration: none;
     display: block;
   }
   
   /* Hover Effect on Links */
   .sidebar ul li:hover {
-    background-color: #5c5c5c; /* Darker shade on hover */
+    background-color:rgba(20, 19, 19, 0.8); /* Darker shade on hover */
     transform: translateX(10px); /* Slight hover effect */
   }
   

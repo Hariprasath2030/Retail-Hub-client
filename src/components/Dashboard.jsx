@@ -92,17 +92,19 @@ const ProductDashboard = () => {
 
   return (
     <>
-       {/* Navbar */}
-       <nav className="navbar">
+      {/* Navbar */}
+      <nav className="navbar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ cursor: 'pointer' }}
-            onClick={toggleSidebar} // Toggle sidebar when logo is clicked
-          />
-    <h2>SMART RETAIL HUB</h2>
-  </div>
+          {!isSidebarOpen && (
+            <div className="toggle-button open" onClick={toggleSidebar}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          )}
+          <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
+          <h2>SMART RETAIL HUB</h2>
+          </div>
   <Button
     onClick={logout}
     style={{
@@ -131,7 +133,7 @@ const ProductDashboard = () => {
           <br></br>
           <br></br>
           <li><a href="#dashboard" onClick={toggleSidebar}>Dashboard</a></li>
-          <li><a href="#products" onClick={toggleSidebar}>Products</a></li>
+          <li><a href="#products" onClick={toggleSidebar}>Add Products</a></li>
           <li><a href="#settings" onClick={toggleSidebar}>Settings</a></li>
           <li><a href="#logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</a></li>
         </ul>

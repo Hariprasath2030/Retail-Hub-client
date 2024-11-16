@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 import "react-router-dom";
 import { Button } from 'antd';
 import Cus_Card from "./Cus_Card";
@@ -8,15 +8,27 @@ import logo from '/src/assets/retail.png';
 
 
 const Customer = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
   const { logout } = useAuth();
+  
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   return (
     <>
-    {/* Navbar */}
-    <nav className="navbar">
-  <div style={{ display: 'flex', alignItems: 'center' }}>
-    <img src={logo} alt="Logo" />
-    <h2>SMART RETAIL HUB</h2>
-  </div>
+ {/* Navbar */}
+ <nav className="navbar">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {!isSidebarOpen && (
+            <div className="toggle-button open" onClick={toggleSidebar}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          )}
+          <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
+          <h2>SMART RETAIL HUB</h2>
+          </div>
   <Button
     onClick={logout}
     style={{
@@ -37,6 +49,28 @@ const Customer = () => {
 </Button>
 
 </nav>
+
+      {/* Sidebar */}
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <ul>
+          <br></br>
+          <br></br>
+          <br></br>
+          <li><a href="#dashboard" onClick={toggleSidebar}>Dashboard</a></li>
+          <li><a href="#products" onClick={toggleSidebar}>Add Products</a></li>
+          <li><a href="#settings" onClick={toggleSidebar}>Settings</a></li>
+          <li><a href="#logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</a></li>
+        </ul>
+      </div>
+
+      {/* Main Content */}
+      <div className={`content ${isSidebarOpen ? 'shift' : ''}`}>
+        {isSidebarOpen && (
+          <div className="toggle-button close" onClick={toggleSidebar}>
+            <span></span>
+            <span></span>
+          </div>
+        )}
       <div className="flex w-full h-full justify-center items-center">
         <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
           <Cus_Card
@@ -94,6 +128,7 @@ const Customer = () => {
             desc="Description"
           />
         </div>
+      </div>
       </div>
     </>
   );
