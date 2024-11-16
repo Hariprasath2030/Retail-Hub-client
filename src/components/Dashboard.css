@@ -1,13 +1,5 @@
 
 
-/* src/Dashboard.css */
-.dashboard-container {
-    padding: 20px;
-    background-image: url('/src/assets/dash.jpg'); 
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    color: #333;
-}
 
 .background1-image {
     position: fixed;

@@ -124,7 +124,7 @@ const Customer = () => {
       )}
     </nav>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
+          <img src={logo} alt="Logo" style={{ width: '50px'}} />
           <h2>SMART RETAIL HUB</h2>
           </div>
   <Button

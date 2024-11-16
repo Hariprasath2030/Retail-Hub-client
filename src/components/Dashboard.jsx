@@ -19,7 +19,7 @@ const ProductDashboard = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [4]);
+  }, []);
 
 
   const fetchProducts = async () => {
@@ -166,12 +166,14 @@ const ProductDashboard = () => {
           <>
           <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}> Circular Display - Product</h2>
             <br></br>
+            <div className="container">
+
             <div style={{ display: 'flex', gap: '50px', flexWrap: 'wrap', marginBottom: '20px' }}>
               {products.map((product) => (
                 <div key={product._id} style={{
                   width: '150px',
                   textAlign: 'center',
-                  border: '2px solid #313131',
+                  border: '1px solid #989898',
                   fontSize: '18px',
                   padding: '10px',
                   borderRadius: '8px',
@@ -203,7 +205,7 @@ const ProductDashboard = () => {
                   )
                 }
                 style={{ marginBottom: '10px', width: '100%', borderColor: '#4caf50', borderRadius: '4px', padding: '5px',border: 'solid 2px #616664' }}
-              />
+                />
                <input
               type="number"
             value={product.productQuantity}
@@ -215,12 +217,12 @@ const ProductDashboard = () => {
                  prev.map((p) =>
                p._id === product._id
                  ? { ...p, productQuantity: value }
-               : p
-             )
-            );
+                 : p
+                )
+              );
                 }}
                 style={{ marginBottom: '10px', width: '100%', borderColor: '#4caf50', borderRadius: '4px', padding: '5px',border: 'solid 2px #616664' }}
-              />
+                />
               <div
     style={{
       display: 'flex',
@@ -228,7 +230,7 @@ const ProductDashboard = () => {
       gap: '10px', // Spacing between buttons
       marginTop: '10px',
     }}
-  >
+    >
               <button
                 onClick={() =>
                   editProduct(product._id, {
@@ -247,7 +249,7 @@ const ProductDashboard = () => {
                 }}
                 onMouseOver={(e) => (e.target.style.backgroundColor = 'black')}
                 onMouseOut={(e) => (e.target.style.backgroundColor = '  #5b5b5b')}
-              >
+                >
                 Save
               </button>
               <button
@@ -262,13 +264,13 @@ const ProductDashboard = () => {
                 }}
                 onMouseOver={(e) => (e.target.style.backgroundColor = '#d32f2f')}
                 onMouseOut={(e) => (e.target.style.backgroundColor = '#6f3434')}
-              >
+                >
                 Cancel
               </button>
             </div>
               </div>
             ) : (
-            <>
+              <>
               <h3 style={{ margin: '10px 0' }}>{product.productName}</h3>
               <button
                 onClick={() => setEditingProductId(product._id)}
@@ -307,6 +309,7 @@ const ProductDashboard = () => {
                 </div>
               ))}
               </div>
+            </div>
               </>
               <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}>Product List</h2>
         <table className="product-table">
