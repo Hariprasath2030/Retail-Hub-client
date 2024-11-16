@@ -4,29 +4,16 @@ import { Button } from 'antd';
 import Cus_Card from "./Cus_Card";
 import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png';
-import { Link } from "react-router-dom";
 import '../assets/css/customer.css'
 
 
-const Customer = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
+const Customer = () => {  
   const { logout } = useAuth();
-  
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-  return (
+    return (
     <>
  {/* Navbar */}
  <nav className="navbar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {!isSidebarOpen && (
-            <div className="toggle-button open" onClick={toggleSidebar}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          )}
           <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
           <h2>SMART RETAIL HUB</h2>
           </div>
@@ -50,37 +37,8 @@ const Customer = () => {
 </Button>
 
 </nav>
-
-      {/* Sidebar */}
-      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-      <ul>
-          <br></br>
-          <br></br>
-          <br></br>
-          <li>
-      <Link to="/totalpage" onClick={toggleSidebar}>Dashboard</Link>
-    </li>
-    <li>
-      <Link to="/products" onClick={toggleSidebar}>Add Products</Link>
-    </li>
-    <li>
-      <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
-    </li>
-    <li>
-      <Link to="/logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
-    </li>
-    
-        </ul>
-      </div>
-
       {/* Main Content */}
-      <div className={`content ${isSidebarOpen ? 'shift' : ''}`}>
-        {isSidebarOpen && (
-          <div className="toggle-button close" onClick={toggleSidebar}>
-            <span></span>
-            <span></span>
-          </div>
-        )}
+    <div className={`content`}>
       <div className="flex w-full h-full justify-center items-center">
         <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
           <Cus_Card
