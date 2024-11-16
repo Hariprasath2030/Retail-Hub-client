@@ -6,6 +6,8 @@ import './Dashboard.css';
 import { Button } from 'antd';
 import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png'; // Import your logo image
+import { Link } from "react-router-dom";
+
 
 
 
@@ -132,10 +134,18 @@ const ProductDashboard = () => {
           <br></br>
           <br></br>
           <br></br>
-          <li><a href="#dashboard" onClick={toggleSidebar}>Dashboard</a></li>
-          <li><a href="#products" onClick={toggleSidebar}>Add Products</a></li>
-          <li><a href="#settings" onClick={toggleSidebar}>Settings</a></li>
-          <li><a href="#logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</a></li>
+          <li>
+      <Link to="/dashdoard" onClick={toggleSidebar}>Dashboard</Link>
+    </li>
+    <li>
+      <Link to="/addproduct" onClick={toggleSidebar}>Add Products</Link>
+    </li>
+    <li>
+      <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
+    </li>
+    <li>
+      <Link to="/logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
+    </li>
         </ul>
       </div>
 

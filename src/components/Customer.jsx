@@ -3,8 +3,8 @@ import "react-router-dom";
 import { Button } from 'antd';
 import Cus_Card from "./Cus_Card";
 import { useAuth } from '..//contexts/AuthContext';
-import logo from '/src/assets/retail.png'; 
-
+import logo from '/src/assets/retail.png';
+import { Link } from "react-router-dom";
 
 
 const Customer = () => {
@@ -52,14 +52,22 @@ const Customer = () => {
 
       {/* Sidebar */}
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        <ul>
+      <ul>
           <br></br>
           <br></br>
           <br></br>
-          <li><a href="#dashboard" onClick={toggleSidebar}>Dashboard</a></li>
-          <li><a href="#products" onClick={toggleSidebar}>Add Products</a></li>
-          <li><a href="#settings" onClick={toggleSidebar}>Settings</a></li>
-          <li><a href="#logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</a></li>
+          <li>
+      <Link to="/totalpage" onClick={toggleSidebar}>Dashboard</Link>
+    </li>
+    <li>
+      <Link to="/products" onClick={toggleSidebar}>Add Products</Link>
+    </li>
+    <li>
+      <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
+    </li>
+    <li>
+      <Link to="/logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
+    </li>
         </ul>
       </div>
 

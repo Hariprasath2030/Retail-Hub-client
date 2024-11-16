@@ -339,7 +339,7 @@ td {
   }
   
   button:hover {
-    background-color: #444;
+    background-color:rgba(20, 19, 19, 0.8);
     transform: scale(1.05); /* Slight zoom effect */
   }
   

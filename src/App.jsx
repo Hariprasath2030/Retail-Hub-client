@@ -12,6 +12,8 @@ import Bar from './components/Bar';
 import BarcodeScanner from './components/BarcodeScanner';
 import PDFDetails from './components/PDFDetails';
 import PDFGenerator from './components/PDFGenerator';
+import AddProduct from './components/AddProduct'; // Fixed component name casing
+
 const App = () => { 
     const { isAuthenticated } = useAuth();
 
@@ -39,6 +41,8 @@ const App = () => {
                 <Route path="/barcodescanner" element={<BarcodeScanner />} />
                 <Route path="/pdfdetails" element={<PDFDetails />} />
                 <Route path="/pdfgenerator" element={<PDFGenerator />} />
+                <Route path="/addproduct" element={<AddProduct />} />
+                <Route path="/dashboard" element={<Dashboard/>} />
             </Routes>
         </Router>
     );

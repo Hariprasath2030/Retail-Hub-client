@@ -209,7 +209,7 @@ body, html {
   
   /* Hover Effect on Links */
   .sidebar ul li:hover {
-    background-color:rgba(130, 130, 130, 0.8); /* Darker shade on hover */
+    background-color:rgba(93, 93, 93, 0.8); /* Darker shade on hover */
     transform: translateX(10px); /* Slight hover effect */
   }
   
