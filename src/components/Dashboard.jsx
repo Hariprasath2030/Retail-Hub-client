@@ -179,107 +179,132 @@ const ProductDashboard = () => {
                   />
                    {editingProductId === product._id ? (
               <div style={{ marginTop: '15px' }}>
-                <input
-                  type="text"
-                  value={product.productName}
-                  onChange={(e) =>
-                    setProducts((prev) =>
-                      prev.map((p) =>
-                        p._id === product._id
-                          ? { ...p, productName: e.target.value }
-                          : p
-                      )
+              <input
+                type="text"
+                value={product.productName}
+                onChange={(e) =>
+                  setProducts((prev) =>
+                    prev.map((p) =>
+                      p._id === product._id
+                        ? { ...p, productName: e.target.value }
+                        : p
                     )
-                  }
-                  style={{ marginBottom: '10px', width: '100%' }}
-                />
-                <input
-                  type="number"
-                  value={product.productQuantity}
-                  onChange={(e) =>
-                    setProducts((prev) =>
-                      prev.map((p) =>
-                        p._id === product._id
-                          ? { ...p, productQuantity: parseInt(e.target.value, 10) }
-                          : p
-                      )
-                    )
-                  }
-                  style={{ marginBottom: '10px', width: '100%' }}
-                />
-                <button
-                  onClick={() =>
-                    editProduct(product._id, {
-                      productName: product.productName,
-                      productQuantity: product.productQuantity,
-                    })
-                  }
-                  style={{
-                    marginRight: '5px',
-                    padding: '5px 10px',
-                    backgroundColor: '#4caf50',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '4px',
-                  }}
-                >
-                  Save
-                </button>
-                <button
-                  onClick={() => setEditingProductId(null)}
-                  style={{
-                    padding: '5px 10px',
-                    backgroundColor: '#f44336',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '4px',
-                  }}
-                >
-                  Cancel
-                </button>
+                  )
+                }
+                style={{ marginBottom: '10px', width: '100%', borderColor: '#4caf50', borderRadius: '4px', padding: '5px',border: 'solid 2px #616664' }}
+              />
+               <input
+              type="number"
+            value={product.productQuantity}
+             min="0"
+            max="100"
+              onChange={(e) => {
+              const value = Math.min(100, Math.max(0, parseInt(e.target.value, 10)));
+               setProducts((prev) =>
+                 prev.map((p) =>
+               p._id === product._id
+                 ? { ...p, productQuantity: value }
+               : p
+             )
+            );
+                }}
+                style={{ marginBottom: '10px', width: '100%', borderColor: '#4caf50', borderRadius: '4px', padding: '5px',border: 'solid 2px #616664' }}
+              />
+              <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px', // Spacing between buttons
+      marginTop: '10px',
+    }}
+  >
+              <button
+                onClick={() =>
+                  editProduct(product._id, {
+                    productName: product.productName,
+                    productQuantity: product.productQuantity,
+                  })
+                }
+                style={{
+                  marginRight: '5px',
+                  padding: '5px 10px',
+                  backgroundColor: '#5b5b5b',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '4px',
+                  transition: 'background-color 0.3s',
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = 'black')}
+                onMouseOut={(e) => (e.target.style.backgroundColor = '  #5b5b5b')}
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEditingProductId(null)}
+                style={{
+                  padding: '5px 10px',
+                  backgroundColor: '#6f3434',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '4px',
+                  transition: 'background-color 0.3s',
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = '#d32f2f')}
+                onMouseOut={(e) => (e.target.style.backgroundColor = '#6f3434')}
+              >
+                Cancel
+              </button>
+            </div>
               </div>
             ) : (
-              <>
-                <h3 style={{ margin: '10px 0' }}>{product.productName}</h3>
-                <button
-                  onClick={() => setEditingProductId(product._id)}
-                  style={{
-                    marginRight: '5px',
-                    padding: '5px 10px',
-                    backgroundColor: '#2196f3',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '4px',
-                  }}
+            <>
+              <h3 style={{ margin: '10px 0' }}>{product.productName}</h3>
+              <button
+                onClick={() => setEditingProductId(product._id)}
+                style={{
+                  marginRight: '5px',
+                  padding: '5px 10px',
+                  backgroundColor: ' #5b5b5b',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '4px',
+                  transition: 'background-color 0.3s',
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = 'black')}
+                onMouseOut={(e) => (e.target.style.backgroundColor = '#5b5b5b')}
                 >
-                  Edit
-                </button>
-                <button
-                  onClick={() => deleteProduct(product._id)}
-                  style={{
-                    padding: '5px 10px',
-                    backgroundColor: '#f44336',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '4px',
-                  }}
+                Edit
+              </button>
+              <button
+                onClick={() => deleteProduct(product._id)}
+                style={{
+                  padding: '5px 10px',
+                  backgroundColor: ' #6f3434',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '4px',
+                  transition: 'background-color 0.3s',
+                }}
+                onMouseOver={(e) => (e.target.style.backgroundColor = '#d32f2f')}
+                onMouseOut={(e) => (e.target.style.backgroundColor = ' #6f3434')}
                 >
-                  Delete
-                </button>
-              </>
+                Delete
+              </button>
+            </>
+            
             )}
                 </div>
               ))}
-            </div>
-          </>
-          <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}>Product List</h2>
+              </div>
+              </>
+              <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}>Product List</h2>
         <table className="product-table">
           <thead>
             <tr>
               <th>ID</th>
               <th>Name</th>
               <th>Quantity (%)</th>
-              <th>Price</th>
+              <th>Price of one product</th>
             </tr>
           </thead>
           <tbody>

@@ -132,7 +132,7 @@ const ProductDashboard = () => {
         <div className="background1-image"></div>
         <div style={{ padding: '20px' }}>
           <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px', fontWeight: 'bold' }}>
-            Product Dashboard
+          Adding the New Product
           </h1>
           <form onSubmit={addProduct} className="product-form">
             <input
@@ -150,12 +150,18 @@ const ProductDashboard = () => {
               required
             />
             <input
-              type="number"
-              placeholder="Product Quantity"
-              value={productQuantity}
-              onChange={(e) => setProductQuantity(Number(e.target.value))}
-              required
-            />
+            type="number"
+             placeholder="Product Quantity"
+            value={productQuantity}
+            min="0"
+            max="100"
+            onChange={(e) => {
+           const value = Math.min(100, Math.max(0, Number(e.target.value)));
+           setProductQuantity(value);
+           }}
+  required
+/>
+
             <input
               type="number"
               placeholder="Price"
@@ -172,7 +178,8 @@ const ProductDashboard = () => {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Quantity (%)</th>
-                <th>Price</th>
+                <th>Price of one product</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -183,9 +190,41 @@ const ProductDashboard = () => {
                   <td>{item.productQuantity}%</td>
                   <td>${item.price ? item.price.toFixed(2) : 'N/A'}</td>
                   <td>
-                    <button onClick={() => editProduct(item)}>Edit</button>
-                    <button onClick={() => deleteProduct(item._id)}>Delete</button>
-                  </td>
+               <button
+              onClick={() => editProduct(item)}
+               style={{
+              padding: '8px 16px',
+               marginRight: '10px',
+               backgroundColor: '#5b5b5b',
+                color: '#fff',
+               border: 'none',
+              borderRadius: '4px',
+             cursor: 'pointer',
+             transition: 'background-color 0.3s',
+             }}
+            onMouseOver={(e) => (e.target.style.backgroundColor = 'black')}
+              onMouseOut={(e) => (e.target.style.backgroundColor = '#5b5b5b')}
+             >
+          Edit
+           </button>
+             <button
+            onClick={() => deleteProduct(item._id)}
+            style={{
+           padding: '8px 16px',
+              backgroundColor: '#6f3434',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+             cursor: 'pointer',
+             transition: 'background-color 0.3s',
+              }}
+               onMouseOver={(e) => (e.target.style.backgroundColor = '#d32f2f')}
+          onMouseOut={(e) => (e.target.style.backgroundColor = '#6f3434')}
+         >
+           Delete
+         </button>
+          </td>
+
                 </tr>
               ))}
             </tbody>
