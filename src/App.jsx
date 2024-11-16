@@ -42,8 +42,8 @@ const App = () => {
                 <Route path="/pdfdetails" element={<PDFDetails />} />
                 <Route path="/pdfgenerator" element={<PDFGenerator />} />
                 <Route path="/addproduct" element={<AddProduct />} />
-                <Route path="/dashboard" element={<Navigate to="/dashboard" />} />
-
+                <Route path="/dashboard" element={<Dashboard/>} />
+        
             </Routes>
         </Router>
     );

@@ -1,5 +1,4 @@
 import './Dashboard.css';
-import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'; // Assuming AuthContext is correctly set up
 import logo from '/src/assets/retail.png';
@@ -16,7 +15,6 @@ const ProductDashboard = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar state
 
-  const { logout } = useAuth(); // Assuming useAuth provides a logout function
 
   useEffect(() => {
     fetchProducts();
@@ -78,7 +76,7 @@ const ProductDashboard = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
+  const { logout } = useAuth();
   return (
     <>
     {/* Navbar */}
@@ -94,24 +92,7 @@ const ProductDashboard = () => {
           <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
           <h2>SMART RETAIL HUB</h2>
         </div>
-        <Button
-          onClick={logout}
-          style={{
-            padding: '8px 15px',
-            backgroundColor: '#333',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease',
-            fontSize: '16px',
-            textAlign: 'center',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#444')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#333')}
-        >
-          Logout
-        </Button>
+      
       </nav>
 
       {/* Sidebar */}
@@ -124,13 +105,16 @@ const ProductDashboard = () => {
             <Link to="/dashboard" onClick={toggleSidebar}>Dashboard</Link>
           </li>
           <li>
-            <Link to="/products" onClick={toggleSidebar}>Add Products</Link>
+            <Link to="" onClick={toggleSidebar}>Add Products</Link>
           </li>
+          <li>
+      <Link to="/totalpage" onClick={toggleSidebar}>Bill section</Link>
+    </li>
           <li>
             <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
           </li>
           <li>
-            <Link to="/logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
+            <Link to="" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
           </li>
         </ul>
       </div>

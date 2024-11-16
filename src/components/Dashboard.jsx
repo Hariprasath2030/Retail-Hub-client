@@ -13,10 +13,6 @@ import { Link } from "react-router-dom";
 
 const ProductDashboard = () => {
   const [products, setProducts] = useState([]);
-  const [userId, setUserId] = useState('');
-  const [productName, setProductName] = useState('');
-  const [productQuantity, setProductQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
   const [editingProductId, setEditingProductId] = useState(null);
   const [loading, setLoading] = useState(false); // Loading state
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar toggle
@@ -37,30 +33,24 @@ const ProductDashboard = () => {
     }
   };
 
-  const addProduct = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    const newProduct = { userId, productName, productQuantity, price };
-
+  const editProduct = async (id, updatedProduct) => {
     try {
-      if (editingProductId) {
-        await axios.put(`http://localhost:5000/api/products/${editingProductId}`, newProduct);
-        setEditingProductId(null);
-      } else {
-        await axios.post('http://localhost:5000/api/products', newProduct);
-      }
-      clearForm();
-      fetchProducts();
+      await axios.put(`http://localhost:5000/api/products/${id}`, updatedProduct);
+  
+      // Update the local state
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product._id === id ? { ...product, ...updatedProduct } : product
+        )
+      );
+      setEditingProductId(null);
+  
+      // Show success alert
+      alert('Product updated successfully!');
     } catch (error) {
-      console.error('Error adding/updating product:', error.response.data);
+      console.error('Error updating product:', error);
+      alert('Please enter your valid quantity!');
     }
-  };
-
-  const editProduct = (product) => {
-    setEditingProductId(product._id);
-    setUserId(product.userId);
-    setProductName(product.productName);
-    setProductQuantity(product.productQuantity);
-    setPrice(product.price);
   };
 
   const deleteProduct = async (id) => {
@@ -70,13 +60,6 @@ const ProductDashboard = () => {
     } catch (error) {
       console.error('Error deleting product:', error);
     }
-  };
-
-  const clearForm = () => {
-    setUserId('');
-    setProductName('');
-    setProductQuantity(0);
-    setPrice(0);
   };
 
   const getCircleColor = (quantity) => {
@@ -135,7 +118,7 @@ const ProductDashboard = () => {
           <br></br>
           <br></br>
           <li>
-      <Link to="/dashdoard" onClick={toggleSidebar}>Dashboard</Link>
+      <Link to="" onClick={toggleSidebar}>Dashboard</Link>
     </li>
     <li>
       <Link to="/addproduct" onClick={toggleSidebar}>Add Products</Link>
@@ -148,7 +131,7 @@ const ProductDashboard = () => {
     </li>
 
     <li>
-      <Link to="/logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
+      <Link to="" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
     </li>
         </ul>
       </div>
@@ -167,38 +150,7 @@ const ProductDashboard = () => {
         <br></br>
         <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px',  fontWeight: 'bold'}}> Product Dashboard</h1>
         <br></br>
-        <form onSubmit={addProduct} className="product-form">
-          <input
-            type="text"
-            placeholder="User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Product Name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Product Quantity"
-            value={productQuantity}
-            onChange={(e) => setProductQuantity(Number(e.target.value))}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-            required
-          />
-          <button type="submit">{editingProductId ? 'Update Product' : 'Add Product'}</button>
-        </form>
-
+       
         {loading && <CircularProgressbar value={0} />}
           <>
           <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}> Circular Display - Product</h2>
@@ -225,15 +177,97 @@ const ProductDashboard = () => {
                       trailColor: '#d6d6d6',
                     })}
                   />
-                  <div className="product-info">
-                    <strong>{product.productName}</strong>
-                    <div style={{ marginTop: '10px' }}>
-                    <div className="button-group">
-                      <button onClick={() => editProduct(product)}>Edit</button>
-                      <button className="delete-button" onClick={() => deleteProduct(product._id)}>Delete</button>
-                     </div>   
-                     </div>
-                  </div>
+                   {editingProductId === product._id ? (
+              <div style={{ marginTop: '15px' }}>
+                <input
+                  type="text"
+                  value={product.productName}
+                  onChange={(e) =>
+                    setProducts((prev) =>
+                      prev.map((p) =>
+                        p._id === product._id
+                          ? { ...p, productName: e.target.value }
+                          : p
+                      )
+                    )
+                  }
+                  style={{ marginBottom: '10px', width: '100%' }}
+                />
+                <input
+                  type="number"
+                  value={product.productQuantity}
+                  onChange={(e) =>
+                    setProducts((prev) =>
+                      prev.map((p) =>
+                        p._id === product._id
+                          ? { ...p, productQuantity: parseInt(e.target.value, 10) }
+                          : p
+                      )
+                    )
+                  }
+                  style={{ marginBottom: '10px', width: '100%' }}
+                />
+                <button
+                  onClick={() =>
+                    editProduct(product._id, {
+                      productName: product.productName,
+                      productQuantity: product.productQuantity,
+                    })
+                  }
+                  style={{
+                    marginRight: '5px',
+                    padding: '5px 10px',
+                    backgroundColor: '#4caf50',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                  }}
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setEditingProductId(null)}
+                  style={{
+                    padding: '5px 10px',
+                    backgroundColor: '#f44336',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <>
+                <h3 style={{ margin: '10px 0' }}>{product.productName}</h3>
+                <button
+                  onClick={() => setEditingProductId(product._id)}
+                  style={{
+                    marginRight: '5px',
+                    padding: '5px 10px',
+                    backgroundColor: '#2196f3',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                  }}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => deleteProduct(product._id)}
+                  style={{
+                    padding: '5px 10px',
+                    backgroundColor: '#f44336',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                  }}
+                >
+                  Delete
+                </button>
+              </>
+            )}
                 </div>
               ))}
             </div>
