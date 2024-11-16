@@ -5,6 +5,7 @@ import Cus_Card from "./Cus_Card";
 import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png';
 import { Link } from "react-router-dom";
+import '../assets/css/customer.css'
 
 
 const Customer = () => {
@@ -68,6 +69,7 @@ const Customer = () => {
     <li>
       <Link to="/logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
     </li>
+    
         </ul>
       </div>
 

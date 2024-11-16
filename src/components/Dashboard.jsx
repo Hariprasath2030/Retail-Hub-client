@@ -141,8 +141,12 @@ const ProductDashboard = () => {
       <Link to="/addproduct" onClick={toggleSidebar}>Add Products</Link>
     </li>
     <li>
+      <Link to="/totalpage" onClick={toggleSidebar}>Bill section</Link>
+    </li>
+    <li>
       <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
     </li>
+
     <li>
       <Link to="/logout" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
     </li>
