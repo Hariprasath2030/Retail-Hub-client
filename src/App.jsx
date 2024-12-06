@@ -7,11 +7,9 @@ import { useAuth } from './contexts/AuthContext';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import UserRegister from './components/UserRegister';
 import UserLogin from './components/UserLogin';
-import TotalPage from './components/TotalPage';
-import Bar from './components/Bar';
 import BarcodeScanner from './components/BarcodeScanner';
-import PDFDetails from './components/PDFDetails';
-import PDFGenerator from './components/PDFGenerator';
+import BillDetails from './components/BillDetails';
+import MainCompartment from './components/MainCompartment';
 import AddProduct from './components/AddProduct'; // Fixed component name casing
 
 const App = () => { 
@@ -36,11 +34,9 @@ const App = () => {
                 <Route path="/customer" element={isAuthenticated ? <Customer /> : <Navigate to="/user_login" />} />
 
                 {/*bill product*/}
-                <Route path="/totalpage" element={<TotalPage />} />
-                <Route path="/bar" element={<Bar />} />
+                <Route path="/billdetails" element={<BillDetails />} />
                 <Route path="/barcodescanner" element={<BarcodeScanner />} />
-                <Route path="/pdfdetails" element={<PDFDetails />} />
-                <Route path="/pdfgenerator" element={<PDFGenerator />} />
+                <Route path="/maincompartment" element={<MainCompartment />} />
                 <Route path="/addproduct" element={<AddProduct />} />
                 <Route path="/dashboard" element={<Dashboard/>} />
         

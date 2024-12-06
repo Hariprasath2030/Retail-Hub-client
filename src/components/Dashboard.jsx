@@ -63,15 +63,21 @@ const ProductDashboard = () => {
       alert('Please enter your valid quantity!');
     }
   };
-
   const deleteProduct = async (id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this product?");
+    if (!isConfirmed) {
+      return; // Exit the function if the user cancels the confirmation dialog.
+    }
+  
     try {
       await axios.delete(`http://localhost:5000/api/products/${id}`);
-      fetchProducts();
+      alert('Product deleted successfully!');
+      fetchProducts(); // Refresh the product list
     } catch (error) {
       console.error('Error deleting product:', error);
     }
   };
+  
 
   const getCircleColor = (quantity) => {
     if (quantity >= 80) return '#4caf50';
@@ -135,7 +141,7 @@ const ProductDashboard = () => {
       <Link to="/addproduct" onClick={toggleSidebar}>Add Products</Link>
     </li>
     <li>
-      <Link to="/totalpage" onClick={toggleSidebar}>Bill section</Link>
+      <Link to="/BarcodeScanner" onClick={toggleSidebar}>Bill section</Link>
     </li>
     <li>
       <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
@@ -173,7 +179,7 @@ const ProductDashboard = () => {
                 <div key={product._id} style={{
                   width: '600px',
                   textAlign: 'center',
-                  border: '1px solid #989898',
+                  border: '4px solid #333',
                   fontSize: '18px',
                   padding: '10px',
                   borderRadius: '8px',
