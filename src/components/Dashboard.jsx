@@ -168,16 +168,18 @@ const ProductDashboard = () => {
             <br></br>
             <div className="container">
 
-            <div style={{ display: 'flex', gap: '50px', flexWrap: 'wrap', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', gap: '50px', flexWrap: 'wrap', marginBottom: '20px'}}>
               {products.map((product) => (
                 <div key={product._id} style={{
-                  width: '150px',
+                  width: '600px',
                   textAlign: 'center',
                   border: '1px solid #989898',
                   fontSize: '18px',
                   padding: '10px',
                   borderRadius: '8px',
                   backgroundColor: '#ffffff',
+                  columnWidth: '150px',
+                  height: '200px',
                   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
                 }}>
                   <CircularProgressbar
@@ -190,6 +192,7 @@ const ProductDashboard = () => {
                       trailColor: '#d6d6d6',
                     })}
                   />
+                  <h2 style={{ margin: '10px 0',fontSize: '20px', fontWeight: 'bold' }}>Available Quantity: {product.productQuantity}%</h2>
                    {editingProductId === product._id ? (
               <div style={{ marginTop: '15px' }}>
               <input
