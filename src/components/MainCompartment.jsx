@@ -9,7 +9,7 @@ function MainCompartment() {
 
   const handleScan = async (barcode) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/productts/${barcode}`);
+      const response = await fetch(`http://localhost:5000/api/productts?barcode=${barcode}`);
       if (response.ok) {
         const product = await response.json();
 
