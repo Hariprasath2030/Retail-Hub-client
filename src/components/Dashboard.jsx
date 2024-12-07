@@ -198,7 +198,8 @@ const ProductDashboard = () => {
                       trailColor: '#d6d6d6',
                     })}
                   />
-                  <h2 style={{ margin: '10px 0',fontSize: '20px', fontWeight: 'bold' }}>Available Quantity: {product.productQuantity}%</h2>
+                  <h2 style={{ margin: '10px 0',fontSize: '35px', fontWeight: 'bold'}}>{product.productName}</h2>
+                  <h2 style={{ margin: '10px 0',fontSize: '20px' }}>Available Quantity: {product.productQuantity}%</h2>
                    {editingProductId === product._id ? (
               <div style={{ marginTop: '15px' }}>
               <input
@@ -235,7 +236,7 @@ const ProductDashboard = () => {
               <div
     style={{
       display: 'flex',
-      flexDirection: 'column',
+      flexDirection: 'row',
       gap: '10px', // Spacing between buttons
       marginTop: '10px',
     }}
@@ -280,7 +281,6 @@ const ProductDashboard = () => {
               </div>
             ) : (
               <>
-              <h3 style={{ margin: '10px 0' }}>{product.productName}</h3>
               <button
                 onClick={() => setEditingProductId(product._id)}
                 style={{
