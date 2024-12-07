@@ -9,34 +9,30 @@ function MainCompartment() {
 
   const handleScan = async (barcode) => {
     try {
-
-      const response = await fetch(`http://localhost:5000/api/products/${barcode}`);
+      const response = await fetch(`http://localhost:5000/api/productts/${barcode}`);
       if (response.ok) {
         const product = await response.json();
-
 
         const existingProduct = products.find((p) => p.barcode === product.barcode);
 
         if (existingProduct) {
-
           setProducts((prevProducts) =>
             prevProducts.map((p) =>
-              p.barcode === product.barcode ? { ...p, quantity: p.quantity + 1 } : p
+              p.barcode === product.barcode
+                ? { ...p, quantity: p.quantity + 1 }
+                : p
             )
           );
 
-
-          await fetch(`http://localhost:5000/api/products/decrement/${barcode}`, {
+          await fetch(`http://localhost:5000/api/productts/decrement/${barcode}`, {
             method: 'PATCH',
           });
         } else {
- 
-          setProducts((prevProducts) => [...prevProducts, { ...product, quantity: 1 }]);
-
-          if (product.stock <= 0) {
+          if (product.quantity <= 0) {
             alert('Product is out of stock!');
             return;
           }
+          setProducts((prevProducts) => [...prevProducts, { ...product, quantity: 1 }]);
         }
       } else {
         alert('Product not found in the database.');
@@ -64,7 +60,6 @@ function MainCompartment() {
   );
 
   const generatePDF = () => {
-
     setTimeout(() => {
       const element = pdfRef.current;
       const options = {
@@ -74,13 +69,13 @@ function MainCompartment() {
         html2canvas: { scale: 2 },
         jsPDF: {
           unit: 'in',
-          format: [4, 8.5], 
+          format: [4, 8.5],
           orientation: 'portrait',
         },
       };
 
       html2pdf().set(options).from(element).save();
-    }, 500); 
+    }, 500);
   };
 
   return (
@@ -123,7 +118,6 @@ function MainCompartment() {
         </div>
       </div>
 
-      {/* BillDetails component for receipt (Visible for PDF rendering) */}
       <div ref={pdfRef} className="visible">
         <BillDetails products={products} grandTotal={grandTotal} />
       </div>
