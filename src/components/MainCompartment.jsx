@@ -7,40 +7,40 @@ function MainCompartment() {
   const [products, setProducts] = useState([]);
   const pdfRef = useRef();
 
-  const handleScan = async (barcode) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/productts?barcode=${barcode}`);
-      if (response.ok) {
-        const product = await response.json();
+ const handleScan = async (barcode) => {
+  try {
+    const response = await fetch(`https://retail-hub-server.onrender.com/api/productts?barcode=${barcode}`);
+    if (response.ok) {
+      const product = await response.json();
 
-        const existingProduct = products.find((p) => p.barcode === product.barcode);
+      const existingProduct = products.find((p) => p.barcode === product.barcode);
 
-        if (existingProduct) {
-          setProducts((prevProducts) =>
-            prevProducts.map((p) =>
-              p.barcode === product.barcode
-                ? { ...p, quantity: p.quantity + 1 }
-                : p
-            )
-          );
+      if (existingProduct) {
+        setProducts((prevProducts) =>
+          prevProducts.map((p) =>
+            p.barcode === product.barcode
+              ? { ...p, quantity: p.quantity + 1 }
+              : p
+          )
+        );
 
-          await fetch(`http://localhost:5000/api/productts/decrement/${barcode}`, {
-            method: 'PATCH',
-          });
-        } else {
-          if (product.quantity <= 0) {
-            alert('Product is out of stock!');
-            return;
-          }
-          setProducts((prevProducts) => [...prevProducts, { ...product, quantity: 1 }]);
-        }
+        await fetch(`https://retail-hub-server.onrender.com/api/productts/decrement/${barcode}`, {
+          method: 'PATCH',
+        });
       } else {
-        alert('Product not found in the database.');
+        if (product.quantity <= 0) {
+          alert('Product is out of stock!');
+          return;
+        }
+        setProducts((prevProducts) => [...prevProducts, { ...product, quantity: 1 }]);
       }
-    } catch (error) {
-      console.error('Error fetching product:', error);
+    } else {
+      alert('Product not found in the database.');
     }
-  };
+  } catch (error) {
+    console.error('Error fetching product:', error);
+  }
+};
 
   const handleQuantityChange = (barcode, newQuantity) => {
     setProducts((prevProducts) =>

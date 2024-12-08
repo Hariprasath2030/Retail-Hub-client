@@ -22,7 +22,7 @@ const ProductDashboard = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/products');
+      const res = await axios.get('https://retail-hub-server.onrender.com/api/products');
       setProducts(res.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -30,25 +30,34 @@ const ProductDashboard = () => {
       console.log('Products fetched successfully');
     }
   };
-
+  
   const addProduct = async (e) => {
     e.preventDefault();
     const newProduct = { userId, productName, productQuantity, price };
-
+  
     try {
       if (editingProductId) {
-        await axios.put(`http://localhost:5000/api/products/${editingProductId}`, newProduct);
+        await axios.put(`https://retail-hub-server.onrender.com/api/products/${editingProductId}`, newProduct);
         setEditingProductId(null);
       } else {
-        await axios.post('http://localhost:5000/api/products', newProduct);
+        await axios.post('https://retail-hub-server.onrender.com/api/products', newProduct);
       }
       clearForm();
       fetchProducts();
     } catch (error) {
-      console.error('Error adding/updating product:', error.response.data);
+      console.error('Error adding/updating product:', error.response?.data || error);
     }
   };
-
+  
+  const deleteProduct = async (id) => {
+    try {
+      await axios.delete(`https://retail-hub-server.onrender.com/api/products/${id}`);
+      fetchProducts();
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
+  };
+  
   const editProduct = (product) => {
     setEditingProductId(product._id);
     setUserId(product.userId);
@@ -57,15 +66,7 @@ const ProductDashboard = () => {
     setPrice(product.price);
   };
 
-  const deleteProduct = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
-      fetchProducts();
-    } catch (error) {
-      console.error('Error deleting product:', error);
-    }
-  };
-
+ 
   const clearForm = () => {
     setUserId('');
     setProductName('');

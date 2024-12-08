@@ -16,7 +16,7 @@ import { useAuth } from '../contexts/AuthContext';
     try {
       setError(null);
       setLoading(true);
-      const res = await fetch('http://localhost:5000/api/customer/customerSignup', {
+      const res = await fetch('https://retail-hub-server.onrender.com/api/customer/customerSignup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

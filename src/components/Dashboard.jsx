@@ -25,15 +25,16 @@ const ProductDashboard = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/products');
+      const res = await axios.get('https://retail-hub-server.onrender.com/api/products');
       setProducts(res.data);
-      checkLowStock(res.data); 
+      checkLowStock(res.data);
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
       setLoading(false);
     }
   };
+  
   const checkLowStock = (products) => {
     const lowStockProducts = products.filter((product) => product.productQuantity < 50);
     if (lowStockProducts.length > 0) {
@@ -43,10 +44,10 @@ const ProductDashboard = () => {
       });
     }
   };
-
+  
   const editProduct = async (id, updatedProduct) => {
     try {
-      await axios.put(`http://localhost:5000/api/products/${id}`, updatedProduct);
+      await axios.put(`https://retail-hub-server.onrender.com/api/products/${id}`, updatedProduct);
   
       // Update the local state
       setProducts((prevProducts) =>
@@ -60,9 +61,10 @@ const ProductDashboard = () => {
       alert('Product updated successfully!');
     } catch (error) {
       console.error('Error updating product:', error);
-      alert('Please enter your valid quantity!');
+      alert('Please enter a valid quantity!');
     }
   };
+  
   const deleteProduct = async (id) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this product?");
     if (!isConfirmed) {
@@ -70,7 +72,7 @@ const ProductDashboard = () => {
     }
   
     try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
+      await axios.delete(`https://retail-hub-server.onrender.com/api/products/${id}`);
       alert('Product deleted successfully!');
       fetchProducts(); // Refresh the product list
     } catch (error) {
@@ -78,7 +80,6 @@ const ProductDashboard = () => {
     }
   };
   
-
   const getCircleColor = (quantity) => {
     if (quantity >= 80) return '#4caf50';
     if (quantity >= 50) return '#ff9800';
