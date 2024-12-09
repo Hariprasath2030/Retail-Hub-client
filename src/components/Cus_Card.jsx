@@ -19,16 +19,6 @@ const Cus_Card = (props) => {
           <div className="h-[15%] flex justify-center items-center font-bold">
             ₹{props.price}
           </div>
-          <div className="h-[75px] w-full flex gap-3">
-            <button className="w-1/2 flex bg-slate-300 hover:bg-slate-200 hover:shadow-lg justify-center items-center rounded-sm">
-              <ShoppingCart />
-              &nbsp;Add to Cart
-            </button>
-            <button className="w-1/2 flex bg-slate-400 hover:bg-slate-500 hover:shadow-lg justify-center items-center rounded-sm">
-              <Zap />
-              &nbsp;Buy Now
-            </button>
-          </div>
         </div>
       </div>
     </>
