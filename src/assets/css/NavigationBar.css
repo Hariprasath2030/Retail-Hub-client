@@ -1,9 +1,9 @@
-.side_navbar {
+.navbar {
     display: flex;
     align-items: center;
     padding: 5px 5px;
     background-color: #333;
-    color: white;
+    color: rgb(0, 0, 0);
     position: relative;
   }
   

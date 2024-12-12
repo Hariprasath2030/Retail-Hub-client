@@ -68,22 +68,38 @@ function MainCompartment() {
   );
 
   const generatePDF = () => {
-    setTimeout(() => {
-      const element = pdfRef.current;
-      const options = {
-        margin: 0.2,
-        filename: 'store-receipt.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: {
-          unit: 'in',
-          format: [4, 8.5],
-          orientation: 'portrait',
-        },
-      };
-      html2pdf().set(options).from(element).save();
-    }, 500);
-  };
+    const element = pdfRef.current;
+  
+    // Temporarily make the element visible for PDF generation
+    element.style.visibility = 'visible';
+    element.style.position = 'relative';
+    element.style.width = '100%';
+    element.style.height = 'auto';
+  
+    const options = {
+      margin: 0.2,
+      filename: 'store-receipt.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: {
+        unit: 'in',
+        format: [4, 8.5],
+        orientation: 'portrait',
+      },
+    };
+  
+    html2pdf()
+      .set(options)
+      .from(element)
+      .save()
+      .finally(() => {
+        // Revert the element to its hidden state after PDF generation
+        element.style.visibility = 'hidden';
+        element.style.position = 'absolute';
+        element.style.width = '0';
+        element.style.height = '0';
+      });
+  };  
 
   return (
     <div
