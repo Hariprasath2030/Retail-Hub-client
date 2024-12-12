@@ -12,7 +12,7 @@ function MainCompartment() {
   const handleScan = async (userId) => {
     try {
       const response = await fetch(
-        `https://retail-hub-server.onrender.com/api/products?userId=${userId}` // Use userId in API
+        `https://retail-hub-server.onrender.com/api/productts?userId=${userId}` // Use userId in API
       );
       if (response.ok) {
         const product = await response.json();
@@ -28,7 +28,7 @@ function MainCompartment() {
           );
 
           await fetch(
-            `https://retail-hub-server.onrender.com/api/products/decrement/${userId}`,
+            `https://retail-hub-server.onrender.com/api/productts/decrement/${userId}`,
             { method: 'PATCH' }
           );
         } else {
