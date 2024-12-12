@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 function BarcodeScanner({ onScan }) {
-  const [barcode, setBarcode] = useState('');
+  const [userId, setBarcode] = useState('');
 
   const handleScan = () => {
-    if (barcode.trim() !== '') {
-      onScan(barcode);
+    if (userId.trim() !== '') {
+      onScan(userId);
       setBarcode('');
     } else {
       alert('Please enter a barcode');
@@ -16,7 +16,7 @@ function BarcodeScanner({ onScan }) {
     <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-lg shadow-md w-full max-w-md">
       <input
         type="text"
-        value={barcode}
+        value={userId}
         onChange={(e) => setBarcode(e.target.value)}
         placeholder="Scan or enter barcode"
         className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"

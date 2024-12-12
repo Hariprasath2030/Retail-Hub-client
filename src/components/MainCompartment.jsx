@@ -9,31 +9,27 @@ function MainCompartment() {
   const pdfRef = useRef();
   const navigate = useNavigate(); // Initialize navigate
 
-  // Change handleScan to accept userId instead of barcode
   const handleScan = async (userId) => {
     try {
       const response = await fetch(
-        `https://retail-hub-server.onrender.com/api/products?userId=${userId}` // Changed barcode to userId in API
+        `https://retail-hub-server.onrender.com/api/products?userId=${userId}` // Use userId in API
       );
       if (response.ok) {
         const product = await response.json();
-
-        const existingProduct = products.find((p) => p.userId === product.userId); // Changed barcode to userId
+        const existingProduct = products.find((p) => p.userId === product.userId);
 
         if (existingProduct) {
           setProducts((prevProducts) =>
             prevProducts.map((p) =>
-              p.userId === product.userId // Changed barcode to userId
+              p.userId === product.userId
                 ? { ...p, productQuantity: p.productQuantity + 1 }
                 : p
             )
           );
 
           await fetch(
-            `https://retail-hub-server.onrender.com/api/products/decrement/${userId}`, // Changed barcode to userId in PATCH request
-            {
-              method: 'PATCH',
-            }
+            `https://retail-hub-server.onrender.com/api/products/decrement/${userId}`,
+            { method: 'PATCH' }
           );
         } else {
           if (product.productQuantity <= 0) {
@@ -50,10 +46,10 @@ function MainCompartment() {
     }
   };
 
-  const handleQuantityChange = (userId, newQuantity) => { // Changed barcode to userId
+  const handleQuantityChange = (userId, newQuantity) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.userId === userId // Changed barcode to userId
+        product.userId === userId
           ? { ...product, productQuantity: Math.max(1, parseInt(newQuantity, 10) || 1) }
           : product
       )
@@ -81,35 +77,57 @@ function MainCompartment() {
           orientation: 'portrait',
         },
       };
-
       html2pdf().set(options).from(element).save();
     }, 500);
   };
 
   return (
-    <div className="font-sans flex flex-col items-center justify-center p-8 bg-gray-100 min-h-screen rounded-lg shadow-md w-full max-w-md">
-      <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
+    <div
+      style={{
+        fontFamily: 'sans-serif',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '8px',
+        backgroundColor: '#f3f4f6',
+        minHeight: '100vh',
+        borderRadius: '8px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        width: '100%',
+        maxWidth: '640px',
+      }}
+    >
+      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#4B5563', textAlign: 'center', marginBottom: '1.5rem' }}>
         User ID Scanner
       </h1>
-      <BarcodeScanner onScan={handleScan} /> {/* Changed to use userId */}
+      <BarcodeScanner onScan={handleScan} />
 
-      <div className="w-full max-w-5xl mt-8 bg-white shadow-md rounded-lg p-6">
-        <h2 className="text-2xl text-gray-700 font-semibold mb-4 text-center">
+      <div
+        style={{
+          width: '100%',
+          backgroundColor: 'white',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          borderRadius: '8px',
+          padding: '1.5rem',
+        }}
+      >
+        <h2 style={{ fontSize: '1.5rem', color: '#4B5563', fontWeight: '600', marginBottom: '1rem', textAlign: 'center' }}>
           Product Details
         </h2>
-        <table className="w-full table-auto border-collapse">
+        <table style={{ width: '100%', tableLayout: 'auto', borderCollapse: 'collapse' }}>
           <thead>
-            <tr className="bg-gray-200">
-              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+            <tr style={{ backgroundColor: '#E5E7EB' }}>
+              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
                 Item
               </th>
-              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
                 Qty
               </th>
-              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
                 Price
               </th>
-              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
                 Total
               </th>
             </tr>
@@ -118,51 +136,85 @@ function MainCompartment() {
             {products.map((product, index) => (
               <tr
                 key={index}
-                className={`${
-                  index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-                } hover:bg-gray-100`}
+                style={{
+                  backgroundColor: index % 2 === 0 ? '#F9FAFB' : 'white',
+                  transition: 'background-color 0.2s ease-in-out',
+                }}
               >
-                <td className="px-6 py-3 text-gray-700">{product.name}</td>
-                <td className="px-6 py-3">
+                <td style={{ padding: '1rem', color: '#4B5563' }}>{product.productName}</td>
+                <td style={{ padding: '1rem' }}>
                   <input
                     type="number"
-                    value={product.quantity}
+                    value={product.productQuantity}
                     onChange={(e) =>
-                      handleQuantityChange(product.userId, e.target.value) // Changed barcode to userId
+                      handleQuantityChange(product.userId, e.target.value)
                     }
                     min="1"
-                    className="w-16 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    style={{
+                      width: '4rem',
+                      textAlign: 'center',
+                      border: '1px solid #D1D5DB',
+                      borderRadius: '4px',
+                      padding: '0.5rem',
+                      outline: 'none',
+                      boxSizing: 'border-box',
+                    }}
                   />
                 </td>
-                <td className="px-6 py-3 text-gray-700">
-                  Rs. {product.price.toFixed(2)}
-                </td>
-                <td className="px-6 py-3 text-gray-700">
-                  Rs. {(product.quantity * product.price).toFixed(2)}
+                <td style={{ padding: '1rem', color: '#4B5563' }}>
+                  Rs. {(product.productQuantity * product.price).toFixed(2)}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="mt-6 text-right text-gray-800 font-semibold text-xl">
+        <div
+          style={{
+            marginTop: '1.5rem',
+            textAlign: 'right',
+            color: '#4B5563',
+            fontWeight: '600',
+            fontSize: '1.25rem',
+          }}
+        >
           Total: Rs. {grandTotal.toFixed(2)}
         </div>
       </div>
 
-      <div ref={pdfRef} className="invisible absolute top-0 left-0 w-0 h-0">
+      <div ref={pdfRef} style={{ visibility: 'hidden', position: 'absolute', top: 0, left: 0, width: 0, height: 0 }}>
         <BillDetails products={products} grandTotal={grandTotal} />
       </div>
 
-      <div className="mt-8 flex justify-center space-x-4">
+      <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
         <button
           onClick={generatePDF}
-          className="px-8 py-3 bg-blue-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          style={{
+            padding: '0.75rem 2rem',
+            backgroundColor: '#2563EB',
+            color: 'white',
+            fontSize: '1.125rem',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+            transition: 'background-color 0.2s ease-in-out',
+            cursor: 'pointer',
+          }}
         >
           Download Bill as PDF
         </button>
         <button
           onClick={() => navigate(-1)} // Navigate to the previous page
-          className="px-8 py-3 bg-red-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300"
+          style={{
+            padding: '0.75rem 2rem',
+            backgroundColor: '#DC2626',
+            color: 'white',
+            fontSize: '1.125rem',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+            transition: 'background-color 0.2s ease-in-out',
+            cursor: 'pointer',
+          }}
         >
           Back
         </button>

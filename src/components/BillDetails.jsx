@@ -18,14 +18,15 @@ function BillDetails({ products, grandTotal }) {
           </tr>
         </thead>
         <tbody>
-          {products.map((product, index) => (
-            <tr key={index}>
-              <td className="py-1">{product.name}</td>
-              <td className="text-center">{product.quantity}</td>
-              <td className="text-right">Rs. {product.price.toFixed(2)}</td>
-              <td className="text-right">Rs. {(product.quantity * product.price).toFixed(2)}</td>
-            </tr>
-          ))}
+        {products.map((product, index) => (
+       <tr key={index}>
+      <td className="py-1">{product.name}</td>
+      <td className="text-center">{product.quantity}</td>
+      <td className="text-right">Rs. {product.price ? product.price.toFixed(2) : '0.00'}</td>
+      <td className="text-right">Rs. {(product.quantity * (product.price || 0)).toFixed(2)}</td>
+       </tr>
+       ))}
+
         </tbody>
       </table>
 
