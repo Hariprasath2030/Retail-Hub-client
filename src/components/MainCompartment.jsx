@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import html2pdf from 'html2pdf.js';
 import BarcodeScanner from './BarcodeScanner';
 import BillDetails from './BillDetails';
@@ -6,41 +7,47 @@ import BillDetails from './BillDetails';
 function MainCompartment() {
   const [products, setProducts] = useState([]);
   const pdfRef = useRef();
+  const navigate = useNavigate(); // Initialize navigate
 
- const handleScan = async (barcode) => {
-  try {
-    const response = await fetch(`https://retail-hub-server.onrender.com/api/products?barcode=${barcode}`);
-    if (response.ok) {
-      const product = await response.json();
+  const handleScan = async (barcode) => {
+    try {
+      const response = await fetch(
+        `https://retail-hub-server.onrender.com/api/products?barcode=${barcode}`
+      );
+      if (response.ok) {
+        const product = await response.json();
 
-      const existingProduct = products.find((p) => p.barcode === product.barcode);
+        const existingProduct = products.find((p) => p.barcode === product.barcode);
 
-      if (existingProduct) {
-        setProducts((prevProducts) =>
-          prevProducts.map((p) =>
-            p.barcode === product.barcode
-              ? { ...p, quantity: p.quantity + 1 }
-              : p
-          )
-        );
+        if (existingProduct) {
+          setProducts((prevProducts) =>
+            prevProducts.map((p) =>
+              p.barcode === product.barcode
+                ? { ...p, quantity: p.quantity + 1 }
+                : p
+            )
+          );
 
-        await fetch(`https://retail-hub-server.onrender.com/api/products/decrement/${barcode}`, {
-          method: 'PATCH',
-        });
-      } else {
-        if (product.quantity <= 0) {
-          alert('Product is out of stock!');
-          return;
+          await fetch(
+            `https://retail-hub-server.onrender.com/api/products/decrement/${barcode}`,
+            {
+              method: 'PATCH',
+            }
+          );
+        } else {
+          if (product.quantity <= 0) {
+            alert('Product is out of stock!');
+            return;
+          }
+          setProducts((prevProducts) => [...prevProducts, { ...product, quantity: 1 }]);
         }
-        setProducts((prevProducts) => [...prevProducts, { ...product, quantity: 1 }]);
+      } else {
+        alert('Product not found in the database.');
       }
-    } else {
-      alert('Product not found in the database.');
+    } catch (error) {
+      console.error('Error fetching product:', error);
     }
-  } catch (error) {
-    console.error('Error fetching product:', error);
-  }
-};
+  };
 
   const handleQuantityChange = (barcode, newQuantity) => {
     setProducts((prevProducts) =>
@@ -84,7 +91,7 @@ function MainCompartment() {
         Barcode Scanner
       </h1>
       <BarcodeScanner onScan={handleScan} />
-  
+
       <div className="w-full max-w-5xl mt-8 bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl text-gray-700 font-semibold mb-4 text-center">
           Product Details
@@ -111,7 +118,7 @@ function MainCompartment() {
               <tr
                 key={index}
                 className={`${
-                  index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                  index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
                 } hover:bg-gray-100`}
               >
                 <td className="px-6 py-3 text-gray-700">{product.name}</td>
@@ -140,24 +147,27 @@ function MainCompartment() {
           Total: Rs. {grandTotal.toFixed(2)}
         </div>
       </div>
-  
-      <div
-        ref={pdfRef}
-        className="invisible absolute top-0 left-0 w-0 h-0"
-      >
+
+      <div ref={pdfRef} className="invisible absolute top-0 left-0 w-0 h-0">
         <BillDetails products={products} grandTotal={grandTotal} />
       </div>
-  
-      <div className="mt-8 flex justify-center">
+
+      <div className="mt-8 flex justify-center space-x-4">
         <button
           onClick={generatePDF}
           className="px-8 py-3 bg-blue-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
         >
           Download Bill as PDF
         </button>
+        <button
+          onClick={() => navigate(-1)} // Navigate to the previous page
+          className="px-8 py-3 bg-red-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300"
+        >
+          Back
+        </button>
       </div>
     </div>
   );
 }
 
-  export default MainCompartment;
+export default MainCompartment;
