@@ -189,7 +189,7 @@ const ProductDashboard = () => {
                   <td>{item.userId}</td>
                   <td>{item.productName}</td>
                   <td>{item.productQuantity}%</td>
-                  <td>${item.price ? item.price.toFixed(2) : 'N/A'}</td>
+                  <td> ₹{item.price ? item.price.toFixed(2) : 'N/A'}</td>
                   <td>
                <button
               onClick={() => editProduct(item)}

@@ -168,8 +168,8 @@ const ProductDashboard = () => {
         <br></br>
         <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px',  fontWeight: 'bold'}}> Product Dashboard</h1>
         <br></br>
-       
-        {loading && <CircularProgressbar value={0} />}
+      
+        { loading && <CircularProgressbar value={10000} />}
           <>
           <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}> Circular Display - Product</h2>
             <br></br>
@@ -337,7 +337,7 @@ const ProductDashboard = () => {
                 <td>{item.userId}</td>
                 <td>{item.productName}</td>
                 <td>{item.productQuantity}%</td>
-                <td>${item.price ? item.price.toFixed(2) : 'N/A'}</td>
+                <td>₹{item.price ? item.price.toFixed(2) : 'N/A'}</td>
               </tr>
             ))}
           </tbody>
