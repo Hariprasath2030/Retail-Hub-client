@@ -8,6 +8,7 @@ import { useAuth } from '..//contexts/AuthContext';
 import logo from '/src/assets/retail.png'; // Import your logo image
 import { Link } from "react-router-dom";
 import { message } from 'antd';
+import { TailSpin } from 'react-loader-spinner';  // Import spinner
 
 
 
@@ -170,9 +171,17 @@ const ProductDashboard = () => {
         <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px',  fontWeight: 'bold'}}> Product Dashboard</h1>
         <br></br>
        
-          <>
+      <>
           <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}> Circular Display - Product</h2>
             <br></br>
+             {loading ? 
+        (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+              <TailSpin color="#ffffff" height={100} width={100} />
+            </div>
+          ) : 
+          (
+
             <div className="container">
 
             <div style={{ display: 'flex', gap: '50px', flexWrap: 'wrap', marginBottom: '20px'}}>
@@ -235,13 +244,13 @@ const ProductDashboard = () => {
                 style={{ marginBottom: '10px', width: '100%', borderColor: '#4caf50', borderRadius: '4px', padding: '5px',border: 'solid 2px #616664' }}
                 />
               <div
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      gap: '10px', // Spacing between buttons
-      marginTop: '10px',
-    }}
-    >
+            style={{
+           display: 'flex',
+           flexDirection: 'row',
+              gap: '10px', // Spacing between buttons
+             marginTop: '10px',
+           }}
+             >
               <button
                 onClick={() =>
                   editProduct(product._id, {
@@ -320,7 +329,8 @@ const ProductDashboard = () => {
               ))}
               </div>
             </div>
-              </>
+          )}
+      </>
               <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}>Product List</h2>
         <table className="product-table">
           <thead>

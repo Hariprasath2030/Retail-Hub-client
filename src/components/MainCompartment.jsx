@@ -24,7 +24,7 @@ function MainCompartment() {
           setProducts((prevProducts) =>
             prevProducts.map((p) =>
               p.userId === product.userId // Changed barcode to userId
-                ? { ...p, quantity: p.quantity + 1 }
+                ? { ...p, productQuantity: p.productQuantity + 1 }
                 : p
             )
           );
@@ -36,11 +36,11 @@ function MainCompartment() {
             }
           );
         } else {
-          if (product.quantity <= 0) {
+          if (product.productQuantity <= 0) {
             alert('Product is out of stock!');
             return;
           }
-          setProducts((prevProducts) => [...prevProducts, { ...product, quantity: 1 }]);
+          setProducts((prevProducts) => [...prevProducts, { ...product, productQuantity: 1 }]);
         }
       } else {
         alert('Product not found in the database.');
@@ -54,16 +54,16 @@ function MainCompartment() {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
         product.userId === userId // Changed barcode to userId
-          ? { ...product, quantity: Math.max(1, parseInt(newQuantity, 10) || 1) }
+          ? { ...product, productQuantity: Math.max(1, parseInt(newQuantity, 10) || 1) }
           : product
       )
     );
   };
 
-  const calculateTotalPrice = (quantity, price) => quantity * price;
+  const calculateTotalPrice = (productQuantity, price) => productQuantity * price;
 
   const grandTotal = products.reduce(
-    (sum, product) => sum + calculateTotalPrice(product.quantity, product.price),
+    (sum, product) => sum + calculateTotalPrice(product.productQuantity, product.price),
     0
   );
 
