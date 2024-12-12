@@ -38,6 +38,7 @@ const ProductDashboard = () => {
   const checkLowStock = (products) => {
     const lowStockProducts = products.filter((product) => product.productQuantity < 50);
     if (lowStockProducts.length > 0) {
+      
       // Notify the user about low-stock products
       lowStockProducts.forEach((product) => {
         message.warning(`Low stock alert: ${product.productName} is below 50%!`, 4); // Message will disappear after 5 seconds
@@ -168,7 +169,7 @@ const ProductDashboard = () => {
         <br></br>
         <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px',  fontWeight: 'bold'}}> Product Dashboard</h1>
         <br></br>
-      
+       
           <>
           <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}> Circular Display - Product</h2>
             <br></br>
@@ -336,7 +337,7 @@ const ProductDashboard = () => {
                 <td>{item.userId}</td>
                 <td>{item.productName}</td>
                 <td>{item.productQuantity}%</td>
-                <td>₹{item.price ? item.price.toFixed(2) : 'N/A'}</td>
+                <td> ₹{item.price ? item.price.toFixed(2) : 'N/A'}</td>
               </tr>
             ))}
           </tbody>

@@ -9,27 +9,28 @@ function MainCompartment() {
   const pdfRef = useRef();
   const navigate = useNavigate(); // Initialize navigate
 
-  const handleScan = async (barcode) => {
+  // Change handleScan to accept userId instead of barcode
+  const handleScan = async (userId) => {
     try {
       const response = await fetch(
-        `https://retail-hub-server.onrender.com/api/products?barcode=${barcode}`
+        `https://retail-hub-server.onrender.com/api/products?userId=${userId}` // Changed barcode to userId in API
       );
       if (response.ok) {
         const product = await response.json();
 
-        const existingProduct = products.find((p) => p.barcode === product.barcode);
+        const existingProduct = products.find((p) => p.userId === product.userId); // Changed barcode to userId
 
         if (existingProduct) {
           setProducts((prevProducts) =>
             prevProducts.map((p) =>
-              p.barcode === product.barcode
+              p.userId === product.userId // Changed barcode to userId
                 ? { ...p, quantity: p.quantity + 1 }
                 : p
             )
           );
 
           await fetch(
-            `https://retail-hub-server.onrender.com/api/products/decrement/${barcode}`,
+            `https://retail-hub-server.onrender.com/api/products/decrement/${userId}`, // Changed barcode to userId in PATCH request
             {
               method: 'PATCH',
             }
@@ -49,10 +50,10 @@ function MainCompartment() {
     }
   };
 
-  const handleQuantityChange = (barcode, newQuantity) => {
+  const handleQuantityChange = (userId, newQuantity) => { // Changed barcode to userId
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.barcode === barcode
+        product.userId === userId // Changed barcode to userId
           ? { ...product, quantity: Math.max(1, parseInt(newQuantity, 10) || 1) }
           : product
       )
@@ -88,9 +89,9 @@ function MainCompartment() {
   return (
     <div className="font-sans flex flex-col items-center justify-center p-8 bg-gray-100 min-h-screen rounded-lg shadow-md w-full max-w-md">
       <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
-        Barcode Scanner
+        User ID Scanner
       </h1>
-      <BarcodeScanner onScan={handleScan} />
+      <BarcodeScanner onScan={handleScan} /> {/* Changed to use userId */}
 
       <div className="w-full max-w-5xl mt-8 bg-white shadow-md rounded-lg p-6">
         <h2 className="text-2xl text-gray-700 font-semibold mb-4 text-center">
@@ -127,7 +128,7 @@ function MainCompartment() {
                     type="number"
                     value={product.quantity}
                     onChange={(e) =>
-                      handleQuantityChange(product.barcode, e.target.value)
+                      handleQuantityChange(product.userId, e.target.value) // Changed barcode to userId
                     }
                     min="1"
                     className="w-16 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
