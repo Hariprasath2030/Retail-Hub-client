@@ -17,6 +17,9 @@ const Navbar = () => {
         <Link to="/register" className="navbar-link">
           Admin Login
         </Link>
+        <Link to="/about" className="navbar-link">
+          About us
+        </Link>
       </div>
     </nav>
   );
