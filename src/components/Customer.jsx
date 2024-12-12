@@ -6,7 +6,7 @@ import logo from '/src/assets/retail.png';
 import "../assets/css/NavigationBar.css";
 import React, { useEffect } from 'react';
 import axios from 'axios';
-
+import nav from '../assets/nav.jpg'
 const Customer = () => {  
   const { logout } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
@@ -31,7 +31,7 @@ const Customer = () => {
  <nav className="navbar">
     <nav className="side_navbar">
       <div className="logo" onClick={toggleMenu}>
-        <img src="your-logo.png" alt="Logo" />
+        <img src="nav.jpg" />
       </div>
       {showMenu && (
         /* From Uiverse.io by sahilxkhadka */ 
