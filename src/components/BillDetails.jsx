@@ -1,4 +1,3 @@
-// BillDetails.jsx'
 
 function BillDetails({ products, grandTotal }) {
   return (

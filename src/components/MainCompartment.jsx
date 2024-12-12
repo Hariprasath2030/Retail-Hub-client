@@ -79,7 +79,7 @@ function MainCompartment() {
   };
 
   return (
-    <div className="font-sans flex flex-col items-center justify-center p-8 bg-gray-100 min-h-screen">
+    <div className="font-sans flex flex-col items-center justify-center p-8 bg-gray-100 min-h-screen rounded-lg shadow-md w-full max-w-md">
       <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
         Barcode Scanner
       </h1>
