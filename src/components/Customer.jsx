@@ -89,9 +89,9 @@ const Customer = () => {
       </nav>
 
       {/* Main Content */}
-      <div className={`content`}>
+      <div className={`content p-20`}>
         <div className="flex w-full h-full justify-center items-center">
-          <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
+          <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-10 justify-center">
             {products.map((product, index) => (
               <Cus_Card
                 key={index}

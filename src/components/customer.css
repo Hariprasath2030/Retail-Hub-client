@@ -119,6 +119,7 @@
   button:hover {
     background-color: #444;
     transform: scale(1.05); /* Slight zoom effect */
+    color: white;
   }
   
   /* Form Inputs (Input Fields and Buttons) */
