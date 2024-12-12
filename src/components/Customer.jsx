@@ -8,6 +8,7 @@ import '../assets/css/NavigationBar.css';
 import './customer.css'; // Added for quantity styling
 import axios from 'axios';
 import { TailSpin } from 'react-loader-spinner'; // Import the loader
+import { useNavigate } from "react-router-dom";
 
 const Customer = () => {
   const { logout } = useAuth();
@@ -15,7 +16,7 @@ const Customer = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Track sidebar state
   const [loading, setLoading] = useState(true); // Track loading state
   const [productList, setProductList] = useState([]);
-
+  const navigate = useNavigate();
   const addToList = (product) => {
     setProductList((prevList) => [...prevList, product]);
   };
@@ -27,11 +28,11 @@ const Customer = () => {
         : "No products in the list."
     );
   };
-  const p = [
-    { id: 1, title: "Product 1", price: 100, quantity: 5 },
-    { id: 2, title: "Product 2", price: 200, quantity: 2 },
-    { id: 3, title: "Product 3", price: 300, quantity: 3 },
-  ];
+
+  const handlePrintList = () => {
+    navigate("/print-list", { state: { productList } });
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -135,7 +136,7 @@ const Customer = () => {
           )}
            <button
         className="print-list-btn bg-blue-500 text-white px-4 py-2 mt-4 rounded"
-        onClick={printList}
+        onClick={handlePrintList}
       >
         Print List
       </button>
