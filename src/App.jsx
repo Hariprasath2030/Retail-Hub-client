@@ -12,6 +12,7 @@ import BillDetails from './components/BillDetails';
 import MainCompartment from './components/MainCompartment';
 import AddProduct from './components/AddProduct';
 import About from './components/About';
+import PrintListPage from './components/PrintListPage';
 import Productdescription from './components/productdescription'; // Fixed component name casing
 
 const App = () => { 

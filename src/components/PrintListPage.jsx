@@ -19,7 +19,7 @@ const PrintListPage = () => {
       ) : (
         <p>No products selected.</p>
       )}
-      <Link to="/" className="back-button bg-blue-500 text-white px-4 py-2 mt-4 rounded">
+      <Link to="/customer" className="back-button bg-blue-500 text-white px-4 py-2 mt-4 rounded">
         Back to Customer Page
       </Link>
     </div>
