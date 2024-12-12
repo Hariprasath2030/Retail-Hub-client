@@ -9,6 +9,7 @@ function MainCompartment() {
   const pdfRef = useRef();
   const navigate = useNavigate(); // Initialize navigate
 
+  // Function to fetch the product based on user ID
   const handleScan = async (userId) => {
     try {
       const response = await fetch(
@@ -46,6 +47,7 @@ function MainCompartment() {
     }
   };
 
+  // Function to handle quantity change in the local state
   const handleQuantityChange = (userId, newQuantity) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -56,29 +58,66 @@ function MainCompartment() {
     );
   };
 
+  // Calculate total price
   const calculateTotalPrice = (productQuantity, price) => productQuantity * price;
 
+  // Calculate grand total
   const grandTotal = products.reduce(
     (sum, product) => sum + calculateTotalPrice(product.productQuantity, product.price),
     0
   );
 
-  const generatePDF = () => {
-    setTimeout(() => {
-      const element = pdfRef.current;
-      const options = {
-        margin: 0.2,
-        filename: 'store-receipt.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: {
-          unit: 'in',
-          format: [4, 8.5],
-          orientation: 'portrait',
-        },
-      };
-      html2pdf().set(options).from(element).save();
-    }, 500);
+  // Decrement product quantity in the database
+  const decrementProductQuantity = async (userId, quantity) => {
+    try {
+      const response = await fetch(
+        `https://retail-hub-server.onrender.com/api/productts/decrement/${userId}`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify({ quantity }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (!response.ok) {
+        console.error('Error decrementing product quantity');
+      }
+    } catch (error) {
+      console.error('Error updating product quantity:', error);
+    }
+  };
+
+  // Generate PDF and update database
+  const generatePDF = async () => {
+    try {
+      setTimeout(() => {
+        const element = pdfRef.current;
+        const options = {
+          margin: 0.2,
+          filename: 'store-receipt.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: {
+            unit: 'in',
+            format: [4, 8.5],
+            orientation: 'portrait',
+          },
+        };
+        html2pdf().set(options).from(element).save();
+      }, 500);
+
+      // Decrement product quantities in the database after PDF generation
+      for (const product of products) {
+        if (product.productQuantity > 0) {
+          await decrementProductQuantity(product.userId, product.productQuantity);
+        }
+      }
+
+      alert('PDF generated and product quantities updated!');
+    } catch (error) {
+      console.error('Error generating PDF and updating quantities:', error);
+    }
   };
 
   return (
@@ -98,7 +137,15 @@ function MainCompartment() {
         maxWidth: '640px',
       }}
     >
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#4B5563', textAlign: 'center', marginBottom: '1.5rem' }}>
+      <h1
+        style={{
+          fontSize: '2rem',
+          fontWeight: 'bold',
+          color: '#4B5563',
+          textAlign: 'center',
+          marginBottom: '1.5rem',
+        }}
+      >
         User ID Scanner
       </h1>
       <BarcodeScanner onScan={handleScan} />
@@ -112,22 +159,62 @@ function MainCompartment() {
           padding: '1.5rem',
         }}
       >
-        <h2 style={{ fontSize: '1.5rem', color: '#4B5563', fontWeight: '600', marginBottom: '1rem', textAlign: 'center' }}>
+        <h2
+          style={{
+            fontSize: '1.5rem',
+            color: '#4B5563',
+            fontWeight: '600',
+            marginBottom: '1rem',
+            textAlign: 'center',
+          }}
+        >
           Product Details
         </h2>
         <table style={{ width: '100%', tableLayout: 'auto', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{ backgroundColor: '#E5E7EB' }}>
-              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
+              <th
+                style={{
+                  padding: '1rem',
+                  textAlign: 'left',
+                  color: '#4B5563',
+                  fontWeight: '500',
+                  borderBottom: '1px solid #D1D5DB',
+                }}
+              >
                 Item
               </th>
-              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
+              <th
+                style={{
+                  padding: '1rem',
+                  textAlign: 'left',
+                  color: '#4B5563',
+                  fontWeight: '500',
+                  borderBottom: '1px solid #D1D5DB',
+                }}
+              >
                 Qty
               </th>
-              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
+              <th
+                style={{
+                  padding: '1rem',
+                  textAlign: 'left',
+                  color: '#4B5563',
+                  fontWeight: '500',
+                  borderBottom: '1px solid #D1D5DB',
+                }}
+              >
                 Price
               </th>
-              <th style={{ padding: '1rem', textAlign: 'left', color: '#4B5563', fontWeight: '500', borderBottom: '1px solid #D1D5DB' }}>
+              <th
+                style={{
+                  padding: '1rem',
+                  textAlign: 'left',
+                  color: '#4B5563',
+                  fontWeight: '500',
+                  borderBottom: '1px solid #D1D5DB',
+                }}
+              >
                 Total
               </th>
             </tr>
