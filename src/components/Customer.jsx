@@ -14,7 +14,7 @@ const Customer = () => {
   useEffect(() => {
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('https://srh-products-server.onrender.com/products');
+            const response = await axios.get('https://retail-hub-server.onrender.com/api/products');
             setProducts(response.data);
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -167,9 +167,9 @@ const Customer = () => {
                     {products.map((product, index) => (
                         <Cus_Card
                             key={index}
-                            title={product.title}
+                            title={product.userId}
                             price={product.price}
-                            desc={product.desc}
+                            desc={product.productName}
                         />
                     ))}
         </div>
