@@ -11,8 +11,9 @@ import BarcodeScanner from './components/BarcodeScanner';
 import BillDetails from './components/BillDetails';
 import MainCompartment from './components/MainCompartment';
 import AddProduct from './components/AddProduct';
-import About from './components/About'; // Fixed component name casing
-import PrintListPage from './components/PrintListPage' 
+import About from './components/About';
+import Productdescription from './components/productdescription'; // Fixed component name casing
+
 const App = () => { 
     const { isAuthenticated } = useAuth();
 
@@ -41,6 +42,7 @@ const App = () => {
                 <Route path="/addproduct" element={<AddProduct />} />
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/about" element={<About/>} />
+                <Route path="/productdescription" element={<Productdescription/>} />
         
             </Routes>
         </Router>

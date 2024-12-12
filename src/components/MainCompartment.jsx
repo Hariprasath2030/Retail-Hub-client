@@ -177,19 +177,9 @@ function MainCompartment() {
                   borderBottom: '1px solid #D1D5DB',
                 }}
               >
-                Price
+                Total Price of product
               </th>
-              <th
-                style={{
-                  padding: '1rem',
-                  textAlign: 'left',
-                  color: '#4B5563',
-                  fontWeight: '500',
-                  borderBottom: '1px solid #D1D5DB',
-                }}
-              >
-                Total
-              </th>
+              
             </tr>
           </thead>
           <tbody>
