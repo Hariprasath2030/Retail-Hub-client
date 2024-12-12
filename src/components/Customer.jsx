@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Button } from 'antd';
-import Cus_Card from "./Cus_Card";
+import { Link } from 'react-router-dom';
+import Cus_Card from './Cus_Card';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '/src/assets/retail.png';
-import "../assets/css/NavigationBar.css";
-import "./customer.css"; // Added for quantity styling
+import '../assets/css/NavigationBar.css';
+import './customer.css'; // Added for quantity styling
 import axios from 'axios';
-import nav from '../assets/nav.jpg'
-const Customer = () => {  
+// Assuming this is used somewhere else in your code
+
+const Customer = () => {
   const { logout } = useAuth();
-  const [showMenu, setShowMenu] = useState(false);
   const [products, setProducts] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Track sidebar state
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,50 +26,27 @@ const Customer = () => {
     fetchProducts();
   }, []);
 
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
+ 
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar open/close
   };
 
   return (
     <>
       {/* Navbar */}
       <nav className="navbar">
-        <nav className="side_navbar">
-          <div className="logo" onClick={toggleMenu}>
-            <img src="your-logo.png" alt="Logo" />
-          </div>
-          {showMenu && (
-            /* From Uiverse.io by sahilxkhadka */ 
-            <div className="menu card w-72 bg-white p-5 shadow-md shadow-black-200/50 rounded-md">
-              <ul className="w-full flex flex-col gap-2">
-                <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
-                  <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-slate-400 hover:shadow-inner focus:bg-gradient-to-r from-purple-400 to-purple-600 focus:text-white text-gray-700 transition-all ease-linear">
-                    <svg /* Dashboard Icon */></svg>
-                    Dashboard
-                  </button>
-                </li>
-                <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
-                  <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-slate-400 hover:shadow-inner focus:bg-gradient-to-r from-purple-400 to-purple-600 focus:text-white text-gray-700 transition-all ease-linear">
-                    <svg /* Settings Icon */></svg>
-                    Settings
-                  </button>
-                </li>
-                <li className="flex-center cursor-pointer p-16-semibold w-full whitespace-nowrap">
-                  <button className="p-16-semibold flex size-full gap-4 p-4 group font-semibold rounded-full bg-cover hover:bg-slate-400 hover:shadow-inner focus:bg-gradient-to-r from-purple-400 to-purple-600 focus:text-white text-gray-700 transition-all ease-linear">
-                    <svg /* Logout Icon */></svg>
-                    Logout
-                  </button>
-                </li>
-              </ul>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {!isSidebarOpen && (
+            <div className="toggle-button open" onClick={toggleSidebar}>
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
           )}
-        </nav>
-
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src={logo} alt="Logo" style={{ width: '50px' }} />
+          <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
           <h2>SMART RETAIL HUB</h2>
         </div>
-
         <Button
           onClick={logout}
           style={{
@@ -88,25 +67,53 @@ const Customer = () => {
         </Button>
       </nav>
 
+      {/* Sidebar */}
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <ul>
+          <br />
+          <br />
+          <br />
+          <li>
+            <Link to="" onClick={toggleSidebar}>Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/settings" onClick={toggleSidebar}>Settings</Link>
+          </li>
+          <li>
+            <Link to="" onClick={() => { toggleSidebar(); logout(); }}>Logout</Link>
+          </li>
+        </ul>
+      </div>
+
       {/* Main Content */}
-      <div className={`content`}>
-        <div className="flex w-full h-full justify-center items-center">
-          <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
-            {products.map((product, index) => (
-              <Cus_Card
-                key={index}
-                price={product.price}
-                title={product.productName}
-                quantity={product.productQuantity}
-                quantityClass={
-                  product.productQuantity <= 25
-                    ? 'low-quantity'
-                    : product.productQuantity <= 75
-                    ? 'medium-quantity'
-                    : 'high-quantity'
-                }
-              />
-            ))}
+      <div className={`content ${isSidebarOpen ? 'shift' : ''}`}>
+        {isSidebarOpen && (
+          <div className="toggle-button close" onClick={toggleSidebar}>
+            <span></span>
+            <span></span>
+          </div>
+        )}
+        <div style={{ padding: '20px' }}>
+          <br />
+          <br />
+          <div className="flex w-full h-full justify-center items-center">
+            <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
+              {products.map((product, index) => (
+                <Cus_Card
+                  key={index}
+                  price={product.price}
+                  title={product.productName}
+                  quantity={product.productQuantity}
+                  quantityClass={
+                    product.productQuantity <= 25
+                      ? 'low-quantity'
+                      : product.productQuantity <= 75
+                      ? 'medium-quantity'
+                      : 'high-quantity'
+                  }
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
