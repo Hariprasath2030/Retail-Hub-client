@@ -79,51 +79,80 @@ function MainCompartment() {
   };
 
   return (
-    <div className="font-sans flex flex-col items-center justify-center p-5">
-      <h1 className="text-2xl font-semibold text-center mb-5">Barcode Scanner</h1>
+    <div className="font-sans flex flex-col items-center justify-center p-8 bg-gray-100 min-h-screen">
+      <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">
+        Barcode Scanner
+      </h1>
       <BarcodeScanner onScan={handleScan} />
-
-      <div className="w-full max-w-4xl mt-5">
-        <h2 className="text-xl text-center font-medium mb-3">Product Details</h2>
-        <table className="w-full table-auto border-separate border-spacing-2">
+  
+      <div className="w-full max-w-5xl mt-8 bg-white shadow-md rounded-lg p-6">
+        <h2 className="text-2xl text-gray-700 font-semibold mb-4 text-center">
+          Product Details
+        </h2>
+        <table className="w-full table-auto border-collapse">
           <thead>
-            <tr>
-              <th className="px-4 py-2 text-left border-b border-gray-300">Item</th>
-              <th className="px-4 py-2 text-left border-b border-gray-300">Qty</th>
-              <th className="px-4 py-2 text-left border-b border-gray-300">Price</th>
-              <th className="px-4 py-2 text-left border-b border-gray-300">Total</th>
+            <tr className="bg-gray-200">
+              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+                Item
+              </th>
+              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+                Qty
+              </th>
+              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+                Price
+              </th>
+              <th className="px-6 py-3 text-left text-gray-600 font-medium border-b border-gray-300">
+                Total
+              </th>
             </tr>
           </thead>
           <tbody>
             {products.map((product, index) => (
-              <tr key={index}>
-                <td className="px-4 py-2">{product.name}</td>
-                <td className="px-4 py-2">
+              <tr
+                key={index}
+                className={`${
+                  index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                } hover:bg-gray-100`}
+              >
+                <td className="px-6 py-3 text-gray-700">{product.name}</td>
+                <td className="px-6 py-3">
                   <input
                     type="number"
                     value={product.quantity}
-                    onChange={(e) => handleQuantityChange(product.barcode, e.target.value)}
+                    onChange={(e) =>
+                      handleQuantityChange(product.barcode, e.target.value)
+                    }
                     min="1"
-                    className="w-12 text-center border border-gray-300 rounded"
+                    className="w-16 text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </td>
-                <td className="px-4 py-2">Rs. {product.price.toFixed(2)}</td>
-                <td className="px-4 py-2">Rs. {(product.quantity * product.price).toFixed(2)}</td>
+                <td className="px-6 py-3 text-gray-700">
+                  Rs. {product.price.toFixed(2)}
+                </td>
+                <td className="px-6 py-3 text-gray-700">
+                  Rs. {(product.quantity * product.price).toFixed(2)}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="mt-5 text-right font-bold text-lg">
+        <div className="mt-6 text-right text-gray-800 font-semibold text-xl">
           Total: Rs. {grandTotal.toFixed(2)}
         </div>
       </div>
-
-      <div ref={pdfRef} className="visible">
+  
+      <div
+        ref={pdfRef}
+        className="invisible absolute top-0 left-0 w-0 h-0"
+      >
         <BillDetails products={products} grandTotal={grandTotal} />
       </div>
-
-      <div className="mt-5 flex justify-center">
-        <button onClick={generatePDF} className="px-6 py-3 bg-blue-500 text-white font-semibold text-lg rounded hover:bg-blue-600">
+  
+      <div className="mt-8 flex justify-center">
+        <button
+          onClick={generatePDF}
+          className="px-8 py-3 bg-blue-600 text-white text-lg font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+        >
           Download Bill as PDF
         </button>
       </div>
@@ -131,4 +160,4 @@ function MainCompartment() {
   );
 }
 
-export default MainCompartment;
+  export default MainCompartment;
