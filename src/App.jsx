@@ -12,7 +12,7 @@ import BillDetails from './components/BillDetails';
 import MainCompartment from './components/MainCompartment';
 import AddProduct from './components/AddProduct';
 import About from './components/About'; // Fixed component name casing
-
+import PrintListPage from './components/PrintListPage' 
 const App = () => { 
     const { isAuthenticated } = useAuth();
 
@@ -33,7 +33,7 @@ const App = () => {
                 {/* Protected dashboard route */}
                 <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
                 <Route path="/customer" element={isAuthenticated ? <Customer /> : <Navigate to="/user_login" />} />
-
+                <Route path="/print-list" element={isAuthenticated ? <PrintListPage /> : <Navigate to="/user_login" />} />
                 {/*bill product*/}
                 <Route path="/billdetails" element={<BillDetails />} />
                 <Route path="/barcodescanner" element={<BarcodeScanner />} />

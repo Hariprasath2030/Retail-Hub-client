@@ -16,7 +16,7 @@ const Cus_Card = (props) => {
             ₹{props.price} <FontAwesomeIcon icon={faTag} />
           </div>
           <div className="h-[20%] w-[100%] gap-2 flex justify-end">
-            <button className='w-1/2 flex justify-center items-center gap-1 bg-slate-200'><FontAwesomeIcon icon={faClipboardList} />Add to List</button>
+            <button className='w-1/2 flex justify-center items-center gap-1 bg-slate-200' onClick={props.onAddToList}><FontAwesomeIcon icon={faClipboardList} />Add to List</button>
             <div className={`flex justify-center w-1/2 items-center rounded-md gap-4 font-bold ${props.quantityClass}`}>
             {props.quantity} <FontAwesomeIcon icon={faCartShopping} />
           </div>

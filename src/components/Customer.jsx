@@ -14,7 +14,24 @@ const Customer = () => {
   const [products, setProducts] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Track sidebar state
   const [loading, setLoading] = useState(true); // Track loading state
+  const [productList, setProductList] = useState([]);
 
+  const addToList = (product) => {
+    setProductList((prevList) => [...prevList, product]);
+  };
+
+  const printList = () => {
+    alert(
+      productList.length > 0
+        ? productList.map((item, index) => `${index + 1}. ${item.productName} - ₹${item.price}`).join("\n")
+        : "No products in the list."
+    );
+  };
+  const p = [
+    { id: 1, title: "Product 1", price: 100, quantity: 5 },
+    { id: 2, title: "Product 2", price: 200, quantity: 2 },
+    { id: 3, title: "Product 3", price: 300, quantity: 3 },
+  ];
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -109,11 +126,19 @@ const Customer = () => {
                         ? 'medium-quantity'
                         : 'high-quantity'
                     }
+                    onAddToList={() => addToList(product)}
                   />
                 ))}
               </div>
             </div>
+            
           )}
+           <button
+        className="print-list-btn bg-blue-500 text-white px-4 py-2 mt-4 rounded"
+        onClick={printList}
+      >
+        Print List
+      </button>
         </div>
       </div>
     </>
