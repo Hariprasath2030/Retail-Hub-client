@@ -9,7 +9,7 @@ function MainCompartment() {
 
  const handleScan = async (barcode) => {
   try {
-    const response = await fetch(`https://retail-hub-server.onrender.com/api/productts?barcode=${barcode}`);
+    const response = await fetch(`https://retail-hub-server.onrender.com/api/products?barcode=${barcode}`);
     if (response.ok) {
       const product = await response.json();
 
@@ -24,7 +24,7 @@ function MainCompartment() {
           )
         );
 
-        await fetch(`https://retail-hub-server.onrender.com/api/productts/decrement/${barcode}`, {
+        await fetch(`https://retail-hub-server.onrender.com/api/products/decrement/${barcode}`, {
           method: 'PATCH',
         });
       } else {

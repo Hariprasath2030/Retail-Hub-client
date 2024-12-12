@@ -168,8 +168,7 @@ const ProductDashboard = () => {
         <br></br>
         <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px',  fontWeight: 'bold'}}> Product Dashboard</h1>
         <br></br>
-      
-        { loading && <CircularProgressbar value={10000} />}
+    
           <>
           <h2 style={{ fontSize: '2.5em', color: '#333', marginBottom: '20px',  fontWeight: 'bold'}}> Circular Display - Product</h2>
             <br></br>
