@@ -7,12 +7,13 @@ import logo from '/src/assets/retail.png';
 import '../assets/css/NavigationBar.css';
 import './customer.css'; // Added for quantity styling
 import axios from 'axios';
-// Assuming this is used somewhere else in your code
+import { TailSpin } from 'react-loader-spinner'; // Import the loader
 
 const Customer = () => {
   const { logout } = useAuth();
   const [products, setProducts] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Track sidebar state
+  const [loading, setLoading] = useState(true); // Track loading state
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,12 +22,12 @@ const Customer = () => {
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchProducts();
   }, []);
-
- 
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar open/close
@@ -69,10 +70,10 @@ const Customer = () => {
 
       {/* Sidebar */}
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <br></br>
+        <br></br>
+        <br></br>
         <ul>
-          <br />
-          <br />
-          <br />
           <li>
             <Link to="" onClick={toggleSidebar}>Dashboard</Link>
           </li>
@@ -87,34 +88,32 @@ const Customer = () => {
 
       {/* Main Content */}
       <div className={`content ${isSidebarOpen ? 'shift' : ''}`}>
-        {isSidebarOpen && (
-          <div className="toggle-button close" onClick={toggleSidebar}>
-            <span></span>
-            <span></span>
-          </div>
-        )}
         <div style={{ padding: '20px' }}>
-          <br />
-          <br />
-          <div className="flex w-full h-full justify-center items-center">
-            <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
-              {products.map((product, index) => (
-                <Cus_Card
-                  key={index}
-                  price={product.price}
-                  title={product.productName}
-                  quantity={product.productQuantity}
-                  quantityClass={
-                    product.productQuantity <= 25
-                      ? 'low-quantity'
-                      : product.productQuantity <= 75
-                      ? 'medium-quantity'
-                      : 'high-quantity'
-                  }
-                />
-              ))}
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+              <TailSpin color="#333" height={100} width={100} />
             </div>
-          </div>
+          ) : (
+            <div className="flex w-full h-full justify-center items-center">
+              <div className="flex w-[1400px] h-auto m-2 shadow-md rounded-md p-4 flex-wrap gap-5 justify-center">
+                {products.map((product, index) => (
+                  <Cus_Card
+                    key={index}
+                    price={product.price}
+                    title={product.productName}
+                    quantity={product.productQuantity}
+                    quantityClass={
+                      product.productQuantity <= 25
+                        ? 'low-quantity'
+                        : product.productQuantity <= 75
+                        ? 'medium-quantity'
+                        : 'high-quantity'
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>
