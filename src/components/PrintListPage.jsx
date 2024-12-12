@@ -114,13 +114,24 @@ const PrintListPage = () => {
               <td className="border border-gray-300 px-2 py-1">₹{product.totalPrice}</td>
             </tr>
           ))}
-        </ul>
-      ) : (
-        <p>No products selected.</p>
-      )}
-      <Link to="/customer" className="back-button bg-blue-500 text-white px-4 py-2 mt-4 rounded">
-        Back to Customer Page
-      </Link>
+        </tbody>
+      </table>
+
+      <div className="total-amount mt-4 text-lg font-bold">
+        Total Amount: ₹{calculateTotalAmount()}
+      </div>
+
+      <div className="buttons mt-4">
+        <button
+          className="download-pdf-btn bg-green-500 text-white px-4 py-2 rounded mr-2"
+          onClick={downloadPDF}
+        >
+          Download as PDF
+        </button>
+        <Link to="/customer" className="back-button bg-blue-500 text-white px-4 py-2 rounded">
+          Back to Customer Page
+        </Link>
+      </div>
     </div>
   );
 };
