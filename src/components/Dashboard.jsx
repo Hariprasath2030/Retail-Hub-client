@@ -147,7 +147,7 @@ const ProductDashboard = () => {
       <Link to="/mainCompartment" onClick={toggleSidebar}>Bill section</Link>
     </li>
     <li>
-    <Link to="/description" onClick={toggleSidebar}>Product Description</Link>
+    <Link to="/productdescription" onClick={toggleSidebar}>Product Description</Link>
     </li>
 
     <li>
@@ -189,7 +189,7 @@ const ProductDashboard = () => {
                 <div key={product._id} style={{
                   width: '600px',
                   textAlign: 'center',
-                  border: '4px solid #333',
+                  border: '2px solid #616664',
                   fontSize: '18px',
                   padding: '10px',
                   borderRadius: '8px',
@@ -208,7 +208,7 @@ const ProductDashboard = () => {
                       trailColor: '#d6d6d6',
                     })}
                   />
-                  <h2 style={{ margin: '10px 0',fontSize: '35px', fontWeight: 'bold'}}>{product.productName}</h2>
+                  <h2 style={{ margin: '10px 0',fontSize: '25px', fontWeight: 'bold'}}>{product.productName}</h2>
                   <h2 style={{ margin: '10px 0',fontSize: '20px' }}>Available Quantity: {product.productQuantity}%</h2>
                    {editingProductId === product._id ? (
               <div style={{ marginTop: '15px' }}>
