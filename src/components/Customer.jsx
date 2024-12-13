@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cus_Card from './Cus_Card';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '/src/assets/retail.png';
@@ -8,7 +8,6 @@ import '../assets/css/NavigationBar.css';
 import './customer.css'; // Added for quantity styling
 import axios from 'axios';
 import { TailSpin } from 'react-loader-spinner'; // Import the loader
-import { useNavigate } from "react-router-dom";
 
 const Customer = () => {
   const { logout } = useAuth();
@@ -17,20 +16,13 @@ const Customer = () => {
   const [loading, setLoading] = useState(true); // Track loading state
   const [productList, setProductList] = useState([]);
   const navigate = useNavigate();
+
   const addToList = (product) => {
     setProductList((prevList) => [...prevList, product]);
   };
 
-  const printList = () => {
-    alert(
-      productList.length > 0
-        ? productList.map((item, index) => `${index + 1}. ${item.productName} - ₹${item.price}`).join("\n")
-        : "No products in the list."
-    );
-  };
-
   const handlePrintList = () => {
-    navigate("/print-list", { state: { productList } });
+    navigate('/print-list', { state: { productList } });
   };
 
   useEffect(() => {
@@ -88,9 +80,7 @@ const Customer = () => {
 
       {/* Sidebar */}
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        <br></br>
-        <br></br>
-        <br></br>
+        <br />
         <ul>
           <li>
             <Link to="" onClick={toggleSidebar}>Dashboard</Link>
@@ -118,7 +108,9 @@ const Customer = () => {
                   <Cus_Card
                     key={index}
                     price={product.price}
+                    image={product.image}
                     title={product.productName}
+                    description={product.description}
                     quantity={product.productQuantity}
                     quantityClass={
                       product.productQuantity <= 25
@@ -132,14 +124,13 @@ const Customer = () => {
                 ))}
               </div>
             </div>
-            
           )}
-           <button
-        className="print-list-btn bg-blue-500 text-white px-4 py-2 mt-4 rounded"
-        onClick={handlePrintList}
-      >
-        Print List
-      </button>
+          <button
+            className="print-list-btn bg-blue-500 text-white px-4 py-2 mt-4 rounded"
+            onClick={handlePrintList}
+          >
+            Print List
+          </button>
         </div>
       </div>
     </>
