@@ -109,24 +109,7 @@ const ProductDashboard = () => {
           <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
           <h2>SMART RETAIL HUB</h2>
         </div>
-        <button
-          onClick={logout}
-          style={{
-            padding: '8px 15px',
-            backgroundColor: '#333',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease',
-            fontSize: '16px',
-            textAlign: 'center',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#444')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#333')}
-        >
-          Logout
-        </button>
+        
       </nav>
 
       {/* Sidebar */}
