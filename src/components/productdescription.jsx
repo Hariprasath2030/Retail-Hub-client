@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import logo from '/src/assets/retail.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Button } from 'antd';
 
 const ProductDashboard = () => {
   const [products, setProducts] = useState([]);
@@ -109,7 +110,7 @@ const ProductDashboard = () => {
           <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
           <h2>SMART RETAIL HUB</h2>
         </div>
-        <button
+        <Button
           onClick={logout}
           style={{
             padding: '8px 15px',
@@ -126,7 +127,7 @@ const ProductDashboard = () => {
           onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#333')}
         >
           Logout
-        </button>
+        </Button>
       </nav>
 
       {/* Sidebar */}

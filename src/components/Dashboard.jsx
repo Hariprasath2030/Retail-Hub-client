@@ -291,7 +291,7 @@ const ProductDashboard = () => {
               </div>
             ) : (
               <>
-              <button
+              {/* <button
                 onClick={() => setEditingProductId(product._id)}
                 style={{
                   marginRight: '5px',
@@ -321,7 +321,7 @@ const ProductDashboard = () => {
                 onMouseOut={(e) => (e.target.style.backgroundColor = ' #6f3434')}
                 >
                 Delete
-              </button>
+              </button> */}
             </>
             
             )}
