@@ -304,74 +304,91 @@ const ProductDashboard = () => {
     {editingProductId ? 'Update Product' : 'Add Product'}
   </button>
 </form>
-
-
-        {/* Product List */}
-        <div
+<div
+  style={{
+    maxWidth: '1200px', // Set the maximum width
+    margin: '0 auto', // Center the container horizontally
+    padding: '0 20px', // Optional: Add padding for small screens
+  }}
+>
+  <div
+    style={{
+      display: 'flex', // Use flexbox for layout
+      flexDirection: 'row', // Align items in a row
+      justifyContent: 'center', // Center items horizontally
+      flexWrap: 'wrap', // Wrap content to the next row
+      gap: '20px', // Add spacing between items
+      margin: '20px 0', // Optional: Add some margin around the container
+    }}
+  >
+    {products.map((product) => (
+      <div
+        key={product._id}
+        style={{
+          width: '250px', // Fixed width
+          height: '350px', // Fixed height
+          border: '1px solid #ccc',
+          borderRadius: '10px',
+          padding: '15px',
+          textAlign: 'center',
+          backgroundColor: '#fff',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          display: 'flex', // Flexbox for vertical alignment
+          flexDirection: 'column',
+          justifyContent: 'space-between', // Space items evenly
+          alignItems: 'center', // Center content
+        }}
+      >
+        <img
+          src={product.image}
+          alt={product.productName}
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '20px',
+            width: '100%',
+            height: '150px',
+            objectFit: 'cover',
+            borderRadius: '5px',
           }}
-        >
-          {products.map((product) => (
-            <div
-              key={product._id}
-              style={{
-                border: '1px solid #ccc',
-                borderRadius: '10px',
-                padding: '15px',
-                textAlign: 'center',
-                backgroundColor: '#fff',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-              }}
-            >
-              <img
-                src={product.image}
-                alt={product.productName}
-                style={{
-                  width: '100%',
-                  height: '150px',
-                  objectFit: 'cover',
-                  borderRadius: '5px',
-                  marginBottom: '10px',
-                }}
-              />
-              <h3 style={{ margin: '10px 0' }}>{product.productName}</h3>
-              <p>Quantity: {product.productQuantity}%</p>
-              <p>Price: ₹{product.price}</p>
-              <p>{product.description}</p>
-              <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '10px' }}>
-                <button
-                  onClick={() => editProduct(product)}
-                  style={{
-                    backgroundColor: '#FFC107',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '5px',
-                    padding: '5px 10px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => deleteProduct(product._id)}
-                  style={{
-                    backgroundColor: '#FF5722',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '5px',
-                    padding: '5px 10px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Delete
-                </button>
-                </div>
-                </div>
-              ))}
-            </div>
+        />
+        <h3 style={{ margin: '10px 0', fontSize: '16px' }}>{product.productName}</h3>
+        <p style={{ fontSize: '16px' }}>Quantity: {product.productQuantity}%</p>
+        <p style={{ fontSize: '16px' }}>Price: ₹{product.price}</p>
+        <p style={{ fontSize: '16px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {product.description}
+        </p>
+        <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+          <button
+            onClick={() => editProduct(product)}
+            style={{
+              backgroundColor: '#FFC107',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              cursor: 'pointer',
+            }}
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => deleteProduct(product._id)}
+            style={{
+              backgroundColor: '#FF5722',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '5px',
+              padding: '5px 10px',
+              cursor: 'pointer',
+            }}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+
           </div>
         </div>
       </div>
