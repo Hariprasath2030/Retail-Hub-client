@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 import BarcodeScanner from './BarcodeScanner';
 import BillDetails from './BillDetails';
@@ -7,13 +7,12 @@ import BillDetails from './BillDetails';
 function MainCompartment() {
   const [products, setProducts] = useState([]);
   const pdfRef = useRef();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
-  // Function to fetch the product based on user ID
   const handleScan = async (userId) => {
     try {
       const response = await fetch(
-        `https://retail-hub-server.onrender.com/api/productts?userId=${userId}` // Use userId in API
+        `https://retail-hub-server.onrender.com/api/productts?userId=${userId}`
       );
       if (response.ok) {
         const product = await response.json();
@@ -47,7 +46,6 @@ function MainCompartment() {
     }
   };
 
-  // Function to handle quantity change in the local state
   const handleQuantityChange = (userId, newQuantity) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -58,24 +56,41 @@ function MainCompartment() {
     );
   };
 
-  // Calculate total price
   const calculateTotalPrice = (productQuantity, price) => productQuantity * price;
 
-  // Calculate grand total
   const grandTotal = products.reduce(
     (sum, product) => sum + calculateTotalPrice(product.productQuantity, product.price),
     0
   );
 
-  const generatePDF = () => {
+  const updateProductQuantities = async () => {
+    try {
+      const updates = products.map((product) => {
+        return fetch(
+          `https://retail-hub-server.onrender.com/api/productts/updateQuantity/${product.userId}`,
+          {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quantity: -product.productQuantity }),
+          }
+        );
+      });
+
+      await Promise.all(updates);
+    } catch (error) {
+      console.error('Error updating product quantities:', error);
+    }
+  };
+
+  const generatePDF = async () => {
     const element = pdfRef.current;
-  
+
     // Temporarily make the element visible for PDF generation
     element.style.visibility = 'visible';
     element.style.position = 'relative';
     element.style.width = '100%';
     element.style.height = 'auto';
-  
+
     const options = {
       margin: 0.2,
       filename: 'store-receipt.pdf',
@@ -87,19 +102,23 @@ function MainCompartment() {
         orientation: 'portrait',
       },
     };
-  
-    html2pdf()
+
+    await html2pdf()
       .set(options)
       .from(element)
-      .save()
-      .finally(() => {
-        // Revert the element to its hidden state after PDF generation
-        element.style.visibility = 'hidden';
-        element.style.position = 'absolute';
-        element.style.width = '0';
-        element.style.height = '0';
-      });
-  };  
+      .save();
+
+    // Revert the element to its hidden state after PDF generation
+    element.style.visibility = 'hidden';
+    element.style.position = 'absolute';
+    element.style.width = '0';
+    element.style.height = '0';
+
+    // Update product quantities in the database
+    await updateProductQuantities();
+
+    alert('PDF generated and product quantities updated in the database.');
+  };
 
   return (
     <div
@@ -179,7 +198,6 @@ function MainCompartment() {
               >
                 Total Price of product
               </th>
-              
             </tr>
           </thead>
           <tbody>
@@ -253,7 +271,7 @@ function MainCompartment() {
           Download Bill as PDF
         </button>
         <button
-          onClick={() => navigate(-1)} // Navigate to the previous page
+          onClick={() => navigate(-1)}
           style={{
             padding: '0.75rem 2rem',
             backgroundColor: '#DC2626',
