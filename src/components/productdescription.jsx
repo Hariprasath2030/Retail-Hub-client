@@ -1,4 +1,3 @@
-import './Dashboard.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '/src/assets/retail.png';
@@ -34,17 +33,17 @@ const ProductDashboard = () => {
 
     const formData = new FormData();
     formData.append('file', image);
-    formData.append('upload_preset', 'your_upload_preset'); // Replace with your Cloudinary preset
-    formData.append('cloud_name', 'your_cloud_name'); // Replace with your Cloudinary cloud name
+    formData.append('upload_preset', 'Hari2030'); // Replace with your Cloudinary preset
+    formData.append('cloud_name', 'dnpasyy3z'); // Replace with your Cloudinary cloud name
 
-    const res = await axios.post('https://api.cloudinary.com/v1_1/your_cloud_name/image/upload', formData);
+    const res = await axios.post('https://api.cloudinary.com/v1_1/dnpasyy3z/image/upload', formData);
     return res.data.url;
   };
 
-  const addProduct = async (e) => {
+  const addOrUpdateProduct = async (e) => {
     e.preventDefault();
-    const imageUrl = await handleImageUpload();
-    const newProduct = { userId, productName, productQuantity, price, description, image: imageUrl };
+    const imageUrl = image ? await handleImageUpload() : null;
+    const newProduct = { userId, productName, productQuantity, price, description, image: imageUrl || undefined };
 
     try {
       if (editingProductId) {
@@ -60,6 +59,25 @@ const ProductDashboard = () => {
     }
   };
 
+  const editProduct = (product) => {
+    setEditingProductId(product._id);
+    setUserId(product.userId);
+    setProductName(product.productName);
+    setProductQuantity(product.productQuantity);
+    setPrice(product.price);
+    setDescription(product.description);
+    setImage(null); // Reset image as it should be re-uploaded if changed
+  };
+
+  const deleteProduct = async (id) => {
+    try {
+      await axios.delete(`https://retail-hub-server.onrender.com/api/products/${id}`);
+      fetchProducts();
+    } catch (error) {
+      console.error('Error deleting product:', error.response?.data || error);
+    }
+  };
+
   const clearForm = () => {
     setUserId('');
     setProductName('');
@@ -67,6 +85,7 @@ const ProductDashboard = () => {
     setPrice(0);
     setDescription('');
     setImage(null);
+    setEditingProductId(null);
   };
 
   const toggleSidebar = () => {
@@ -77,208 +96,286 @@ const ProductDashboard = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <nav
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '10px 20px',
-          backgroundColor: '#333',
-          color: '#fff',
-        }}
-      >
+    {/* Navbar */}
+    <nav className="navbar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {!isSidebarOpen && (
-            <div onClick={toggleSidebar} style={{ cursor: 'pointer', marginRight: '15px' }}>
-              <span style={{ display: 'block', width: '25px', height: '3px', backgroundColor: '#fff', marginBottom: '5px' }}></span>
-              <span style={{ display: 'block', width: '25px', height: '3px', backgroundColor: '#fff', marginBottom: '5px' }}></span>
-              <span style={{ display: 'block', width: '25px', height: '3px', backgroundColor: '#fff' }}></span>
+            <div className="toggle-button open" onClick={toggleSidebar}>
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
           )}
-          <img src={logo} alt="Logo" style={{ width: '50px', marginRight: '15px' }} />
-          <h2 style={{ margin: 0 }}>SMART RETAIL HUB</h2>
+          <img src={logo} alt="Logo" style={{ width: '50px', marginLeft: '15px' }} />
+          <h2>SMART RETAIL HUB</h2>
         </div>
+        <button
+          onClick={logout}
+          style={{
+            padding: '8px 15px',
+            backgroundColor: '#333',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            transition: 'background-color 0.3s ease',
+            fontSize: '16px',
+            textAlign: 'center',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#444')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#333')}
+        >
+          Logout
+        </button>
       </nav>
 
       {/* Sidebar */}
-      {isSidebarOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '250px',
-            height: '100vh',
-            backgroundColor: '#444',
-            color: '#fff',
-            padding: '20px',
-            zIndex: 1000,
-          }}
-        >
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            <li style={{ marginBottom: '10px' }}>
-              <Link to="/dashboard" style={{ color: '#fff', textDecoration: 'none' }} onClick={toggleSidebar}>
-                Dashboard
-              </Link>
-            </li>
-            <li style={{ marginBottom: '10px' }}>
-              <Link to="" style={{ color: '#fff', textDecoration: 'none' }} onClick={toggleSidebar}>
-                Add Products
-              </Link>
-            </li>
-            <li style={{ marginBottom: '10px' }}>
-              <Link to="/maincompartment" style={{ color: '#fff', textDecoration: 'none' }} onClick={toggleSidebar}>
-                Bill Section
-              </Link>
-            </li>
-            <li style={{ marginBottom: '10px' }}>
-              <Link to="/description" style={{ color: '#fff', textDecoration: 'none' }} onClick={toggleSidebar}>
-                Product Description
-              </Link>
-            </li>
-            <li>
-              <Link
-                to=""
-                style={{ color: '#fff', textDecoration: 'none' }}
-                onClick={() => {
-                  toggleSidebar();
-                  logout();
-                }}
-              >
-                Logout
-              </Link>
-            </li>
-          </ul>
-        </div>
-      )}
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <ul>
+          <br />
+          <br />
+          <br />
+          <li>
+            <Link to="/dashboard" onClick={toggleSidebar}>
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link to="/addproduct" onClick={toggleSidebar}>
+              Add Products
+            </Link>
+          </li>
+          <li>
+            <Link to="/mainCompartment" onClick={toggleSidebar}>
+              Bill section
+            </Link>
+          </li>
+          <li>
+            <Link to="/productdescription" onClick={toggleSidebar}>
+              Product Description
+            </Link>
+          </li>
+
+          <li>
+            <Link to="" onClick={() => { toggleSidebar(); logout(); }}>
+              Logout
+            </Link>
+          </li>
+        </ul>
+      </div>
 
       {/* Main Content */}
-      <div style={{ marginLeft: isSidebarOpen ? '250px' : '0', padding: '20px', transition: 'margin-left 0.3s' }}>
-        <h1>Add a New Product</h1>
-        <form onSubmit={addProduct} style={{ display: 'grid', gap: '15px', maxWidth: '600px' }}>
-          <input
-            type="text"
-            placeholder="User ID"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            required
-            style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
-          />
-          <input
-            type="text"
-            placeholder="Product Name"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            required
-            style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
-          />
-          <input
-            type="number"
-            placeholder="Product Quantity"
-            value={productQuantity}
-            onChange={(e) => setProductQuantity(Number(e.target.value))}
-            required
-            style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
-          />
-          <input
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-            required
-            style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
-          />
-          <textarea
-            placeholder="Product Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-            style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '4px', height: '100px' }}
-          ></textarea>
-          <input
-            type="file"
-            onChange={(e) => setImage(e.target.files[0])}
-            accept="image/*"
-            required
-            style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
-          />
-          <button
-            type="submit"
-            style={{
-              padding: '10px',
-              backgroundColor: '#28a745',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
-          >
-            {editingProductId ? 'Update Product' : 'Add Product'}
-          </button>
-        </form>
+      <div className={`content ${isSidebarOpen ? 'shift' : ''}`}>
+        {isSidebarOpen && (
+          <div className="toggle-button close" onClick={toggleSidebar}>
+            <span></span>
+            <span></span>
+          </div>
+        )}
+        <div className="background1-image"></div>
+        <div style={{ padding: '20px' }}>
+          <br />
+          <br />
+          <h1 style={{ fontSize: '3.5em', color: '#333', textAlign: 'center', marginBottom: '20px', fontWeight: 'bold' }}>
+            Product Dashboard
+          </h1>
+          <br />
+      {/* Main Content */}
+      <div
+        style={{
+          marginLeft: isSidebarOpen ? '250px' : '0',
+          transition: 'margin-left 0.3s ease',
+          padding: '20px',
+        }}
+      >
+{/* Product Form */}
+<form
+  onSubmit={addOrUpdateProduct}
+  style={{
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+    maxWidth: '90%', // Flexible width for smaller screens
+    margin: '0 auto 20px',
+  }}
+>
+  <input
+    type="text"
+    placeholder="User ID"
+    value={userId}
+    onChange={(e) => setUserId(e.target.value)}
+    required
+    style={{
+      padding: '10px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      fontSize: '16px',
+      boxSizing: 'border-box',
+      width: '100%', // Responsive width
+    }}
+  />
+  <input
+    type="text"
+    placeholder="Product Name"
+    value={productName}
+    onChange={(e) => setProductName(e.target.value)}
+    required
+    style={{
+      padding: '10px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      fontSize: '16px',
+      boxSizing: 'border-box',
+      width: '100%', // Responsive width
+    }}
+  />
+  <input
+    type="number"
+    placeholder="Product Quantity"
+    value={productQuantity}
+    onChange={(e) => setProductQuantity(Number(e.target.value))}
+    required
+    style={{
+      padding: '10px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      fontSize: '16px',
+      boxSizing: 'border-box',
+      width: '100%', // Responsive width
+    }}
+  />
+  <input
+    type="number"
+    placeholder="Price"
+    value={price}
+    onChange={(e) => setPrice(Number(e.target.value))}
+    required
+    style={{
+      padding: '10px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      fontSize: '16px',
+      boxSizing: 'border-box',
+      width: '100%', // Responsive width
+    }}
+  />
+  <textarea
+    placeholder="Product Description"
+    value={description}
+    onChange={(e) => setDescription(e.target.value)}
+    required
+    style={{
+      padding: '10px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      fontSize: '16px',
+      boxSizing: 'border-box',
+      resize: 'none',
+      width: '100%', // Responsive width
+      height: '100px',
+    }}
+  />
+  <input
+    type="file"
+    onChange={(e) => setImage(e.target.files[0])}
+    accept="image/*"
+    style={{
+      padding: '10px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+      fontSize: '16px',
+      boxSizing: 'border-box',
+      width: '100%', // Responsive width
+    }}
+  />
+  <button
+    type="submit"
+    style={{
+      padding: '10px',
+      backgroundColor: '#4CAF50',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '5px',
+      fontSize: '16px',
+      cursor: 'pointer',
+      width: '100%', // Responsive button width
+    }}
+  >
+    {editingProductId ? 'Update Product' : 'Add Product'}
+  </button>
+</form>
 
-        <h2>Product List</h2>
+
+        {/* Product List */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '15px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '20px',
           }}
         >
           {products.map((product) => (
             <div
               key={product._id}
               style={{
+                border: '1px solid #ccc',
+                borderRadius: '10px',
                 padding: '15px',
-                border: '1px solid #ddd',
-                borderRadius: '4px',
                 textAlign: 'center',
                 backgroundColor: '#fff',
-                boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               }}
             >
               <img
                 src={product.image}
                 alt={product.productName}
-                style={{ width: '100%', height: '150px', objectFit: 'cover', marginBottom: '10px' }}
+                style={{
+                  width: '100%',
+                  height: '150px',
+                  objectFit: 'cover',
+                  borderRadius: '5px',
+                  marginBottom: '10px',
+                }}
               />
-              <h3>{product.productName}</h3>
+              <h3 style={{ margin: '10px 0' }}>{product.productName}</h3>
               <p>Quantity: {product.productQuantity}%</p>
               <p>Price: ₹{product.price}</p>
               <p>{product.description}</p>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '10px' }}>
                 <button
+                  onClick={() => editProduct(product)}
                   style={{
-                    padding: '5px 10px',
-                    backgroundColor: '#007bff',
+                    backgroundColor: '#FFC107',
                     color: '#fff',
                     border: 'none',
-                    borderRadius: '4px',
+                    borderRadius: '5px',
+                    padding: '5px 10px',
                     cursor: 'pointer',
                   }}
                 >
                   Edit
                 </button>
                 <button
+                  onClick={() => deleteProduct(product._id)}
                   style={{
-                    padding: '5px 10px',
-                    backgroundColor: '#dc3545',
+                    backgroundColor: '#FF5722',
                     color: '#fff',
                     border: 'none',
-                    borderRadius: '4px',
+                    borderRadius: '5px',
+                    padding: '5px 10px',
                     cursor: 'pointer',
                   }}
                 >
                   Delete
                 </button>
-              </div>
+                </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </>
   );
 };
-
 export default ProductDashboard;
