@@ -178,7 +178,7 @@ const ProductDashboard = () => {
               <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Quantity (%)</th>
+                <th>No of Quantity</th>
                 <th>Price of one product</th>
                 <th>Actions</th>
               </tr>
@@ -188,7 +188,7 @@ const ProductDashboard = () => {
                 <tr key={item._id}>
                   <td>{item.userId}</td>
                   <td>{item.productName}</td>
-                  <td>{item.productQuantity}%</td>
+                  <td>{item.productQuantity}</td>
                   <td> ₹{item.price ? item.price.toFixed(2) : 'N/A'}</td>
                   <td>
                <button

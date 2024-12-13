@@ -350,7 +350,7 @@ const ProductDashboard = () => {
           }}
         />
         <h3 style={{ margin: '10px 0', fontSize: '16px' }}>{product.productName}</h3>
-        <p style={{ fontSize: '16px' }}>Quantity: {product.productQuantity}%</p>
+        <p style={{ fontSize: '16px' }}>No of Quantity: {product.productQuantity}</p>
         <p style={{ fontSize: '16px' }}>Price: ₹{product.price}</p>
         <p style={{ fontSize: '16px', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {product.description}

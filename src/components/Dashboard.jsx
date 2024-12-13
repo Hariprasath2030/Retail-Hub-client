@@ -209,7 +209,7 @@ const ProductDashboard = () => {
                     })}
                   />
                   <h2 style={{ margin: '10px 0',fontSize: '25px', fontWeight: 'bold'}}>{product.productName}</h2>
-                  <h2 style={{ margin: '10px 0',fontSize: '20px' }}>Available Quantity: {product.productQuantity}%</h2>
+                  <h2 style={{ margin: '10px 0',fontSize: '20px' }}>Available Quantity: {product.productQuantity}</h2>
                    {editingProductId === product._id ? (
               <div style={{ marginTop: '15px' }}>
               <input
