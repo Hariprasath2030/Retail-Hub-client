@@ -10,7 +10,7 @@ import UserLogin from './components/UserLogin';
 import BarcodeScanner from './components/BarcodeScanner';
 import BillDetails from './components/BillDetails';
 import MainCompartment from './components/MainCompartment';
-import AddProduct from './components/AddProduct';
+import AddProduct from './components/Addproduct.jsx';
 import About from './components/About';
 import PrintListPage from './components/PrintListPage';
 import Productdescription from './components/productdescription'; // Fixed component name casing
